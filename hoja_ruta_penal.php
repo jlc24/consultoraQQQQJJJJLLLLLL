@@ -888,6 +888,31 @@ $row = $resultado->fetch_assoc();
                     $('#modal_crear_cliente').modal('show');
                 }
             }
+            $('#modal_close').click(function(){
+                $('#modal_crear_cliente').on('hidden.bs.modal', function (){
+                    $(this).find('#formulario_crear_cliente')[0].reset();
+                });
+            });
+            $('#modal_close_hoja').click(function(){
+                $('#modal_crear_hoja').on('hidden.bs.modal', function() {
+                    $(this).find('#formulario_crear_hoja')[0].reset();
+                });
+            });
+            $('#modal_crear_cliente').on('shown.bs.modal',function(){
+                $('#cli_ci_nit').trigger('focus');
+            });
+            function verifCliente() {
+                var ci = document.getElementById("cli_ci_nit").value;
+                var nombre = document.getElementById("cli_nombre").value;
+                var genero = document.getElementById("cli_genero").value;
+                var direccion = document.getElementById("cli_direccion").value;
+                var celular = document.getElementById("cli_celular").value;
+                if (ci != '' && nombre != '' && genero != '' && direccion != '' && celular != '') {
+                    document.getElementById("create_cliente").disabled = false;
+                }else{
+                    document.getElementById("create_cliente").disabled = true;
+                }
+            }
         </script>
     </body>
 </html>

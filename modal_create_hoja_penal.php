@@ -5,11 +5,11 @@
         }
         $admid = $_SESSION['adm_id'];
     ?>
-    <div id="modal_crear_hoja" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div id="modal_crear_hoja" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" id="modal_close_hoja" name="modal_close_hoja" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Registrar Hoja de Ruta Penal</h4>
                 </div>
                 <div class="modal-body">
@@ -34,7 +34,7 @@
                                 <label class="col-md-4 col-form-label">Patrocinio</label>
                                 <div class="col-md-8">
                                     <select class="custom-select custom-select-sm" id="hoja_actor_cliente" name="hoja_actor_cliente" onchange="verificarCliente()">
-                                        <option selected="">---- SELECCIONAR ----</option>
+                                        <option value="" selected="" disabled>---- SELECCIONAR ----</option>
                                         <option value="DEMANDANTE">VÍCTIMA</option>
                                         <option value="DEMANDADO">IMPUTADO</option>
                                     </select>
@@ -50,7 +50,7 @@
                                 <label class="col-md-4 col-form-label">Actor Jurídico</label>
                                 <div class="col-md-8">
                                     <select class="custom-select custom-select-sm" id="hoja_actor_contra" name="hoja_actor_contra">
-                                        <option selected="">---- SELECCIONAR ----</option>
+                                        <option value="" selected="" disabled>---- SELECCIONAR ----</option>
                                         <option value="DEMANDANTE">VÍCTIMA</option>
                                         <option value="DEMANDADO">IMPUTADO</option>
                                     </select>
@@ -140,8 +140,6 @@
                         </fieldset>
                         <button type="button" id="create_hoja" class="btn btn-purple stepy-finish" data-dismiss="modal">Guardar</button>
                     </form>
-                </div>
-                <div class="modal-footer">
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

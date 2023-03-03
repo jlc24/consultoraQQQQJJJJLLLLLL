@@ -3,6 +3,7 @@
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
+                    <button type="button" id="modal_close" name="modal_close" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Registrar Cliente</h4>
                 </div>
                 <div class="modal-body">
@@ -10,21 +11,21 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="cli_ci_nit">CI ó NIT:</label>
                             <div class="col-md-9">
-                                <input type="number" min="0" id="cli_ci_nit" name="cli_ci_nit" class="form-control form-control-sm">
-                                <small><span style="color: red;" id="error_cli_nombre">(Se requiere Nº de carnet de identidad)</span></small>
+                                <input type="number" min="0" id="cli_ci_nit" name="cli_ci_nit" class="form-control form-control-sm" onkeyup="showError('cli_ci_nit'); verifCliente()" placeholder="0">
+                                <small><span style="color: red;" id="error_cli_ci_nit">(Se requiere Nº de carnet de identidad)</span></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="cli_nombre">Nombre:</label>
                             <div class="col-md-9">
-                                <input type="text" id="cli_nombre" name="cli_nombre" class="form-control form-control-sm" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" autocomplete="off">
+                                <input type="text" id="cli_nombre" name="cli_nombre" class="form-control form-control-sm" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase(); showError('cli_nombre'); verifCliente()" autocomplete="off">
                                 <small><span style="color: red;" id="error_cli_nombre">(Se requiere nombre)</span></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="cli_genero">Género:</label>
                             <div class="col-md-9">
-                                <select class="custom-select custom-select-sm" id="cli_genero" name="cli_genero">
+                                <select class="custom-select custom-select-sm" id="cli_genero" name="cli_genero" onchange="showError('cli_genero'); verifCliente()">
                                     <option value="" selected="" disabled>-&nbsp;-&nbsp;-&nbsp;- SELECCIONAR -&nbsp;-&nbsp;-&nbsp;-</option>
                                     <option value="MASCULINO">MASCULINO</option>
                                     <option value="FEMENINO">FEMENINO</option>
@@ -36,14 +37,14 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="cli_direccion">Dirección:</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control form-control-sm" id="cli_direccion" name="cli_direccion" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" autocomplete="off">
+                                <input type="text" class="form-control form-control-sm" id="cli_direccion" name="cli_direccion" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase(); showError('cli_direccion'); verifCliente()" autocomplete="off">
                                 <small><span style="color: red;" id="error_cli_direccion">(Se requiere direccion)</span></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="cli_celular">Celular:</label>
                             <div class="col-md-9">
-                                <input type="number" min="0" class="form-control form-control-sm" id="cli_celular" name="cli_celular" autocomplete="off">
+                                <input type="number" min="0" class="form-control form-control-sm" id="cli_celular" name="cli_celular" autocomplete="off" placeholder="0" onkeyup="showError('cli_celular'); verifCliente()">
                                 <small><span style="color: red;" id="error_cli_celular">(Se requiere numero de celular)</span></small>
                             </div>
                         </div>

@@ -875,6 +875,44 @@ $row = $resultado->fetch_assoc();
                     }
                 });
             });
+            function verificarCliente() {
+                var cliente = document.getElementById("cli_id").value;
+                if (cliente == '') {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Cliente no encontrado, por favor registre al cliente',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    document.getElementById("hoja_nombre_solicitante").value = '';
+                    $('#modal_crear_cliente').modal('show');
+                }
+            }
+            $('#modal_close').click(function(){
+                $('#modal_crear_cliente').on('hidden.bs.modal', function (){
+                    $(this).find('#formulario_crear_cliente')[0].reset();
+                });
+            });
+            $('#modal_close_hoja').click(function(){
+                $('#modal_crear_hoja').on('hidden.bs.modal', function() {
+                    $(this).find('#formulario_crear_hoja')[0].reset();
+                });
+            });
+            $('#modal_crear_cliente').on('shown.bs.modal',function(){
+                $('#cli_ci_nit').trigger('focus');
+            });
+            function verifCliente() {
+                var ci = document.getElementById("cli_ci_nit").value;
+                var nombre = document.getElementById("cli_nombre").value;
+                var genero = document.getElementById("cli_genero").value;
+                var direccion = document.getElementById("cli_direccion").value;
+                var celular = document.getElementById("cli_celular").value;
+                if (ci != '' && nombre != '' && genero != '' && direccion != '' && celular != '') {
+                    document.getElementById("create_cliente").disabled = false;
+                }else{
+                    document.getElementById("create_cliente").disabled = true;
+                }
+            }
         </script>
     </body>
 </html>

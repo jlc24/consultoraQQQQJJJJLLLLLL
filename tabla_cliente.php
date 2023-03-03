@@ -87,11 +87,7 @@
                         <td>
                             <a href="#" data-toggle="modal" data-target="#modal_actualizar_cliente" onclick="EditarCliente('<?php echo $datos; ?>')" title='Editar Datos'>
                                 <i style='color: purple; --darkreader-inline-color:#230443; font-size:20px;' class="far fa-edit"></i>
-                            </a>&nbsp;
-                            <a href="#" onclick="EliminarCliente('<?php echo $registro["cli_id"] . "||" . $registro["cli_nombre"]; ?>')" title='Borrar Datos'>
-                                        <i style='color: purple; --darkreader-inline-color:#230443; font-size:20px;' class="far fa-trash-alt"></i>
                             </a>
-
                         </td>
                     </tr>
                 <?php

@@ -366,9 +366,33 @@ $row = $resultado->fetch_assoc();
                         }
                     });
                 });
-            //------------------------------------------------------------------------------------//
-            //------------------------------------------------------------------------------------//
+                $('#modal_close').click(function(){
+                    $('#modal_crear_cliente').on('hidden.bs.modal', function (){
+                        $(this).find('#formulario_crear_cliente')[0].reset();
+                    });
+                });
             });
+            function showError(cadena){
+                var dato = $('#'+cadena+'').val();
+                console.log(dato);
+                if (dato != '') {
+                    document.getElementById("error_"+cadena+"").style.display = "none";
+                }else{
+                    document.getElementById("error_"+cadena+"").style.display = "";
+                }
+            }
+            function verifCliente() {
+                var ci = document.getElementById("cli_ci_nit").value;
+                var nombre = document.getElementById("cli_nombre").value;
+                var genero = document.getElementById("cli_genero").value;
+                var direccion = document.getElementById("cli_direccion").value;
+                var celular = document.getElementById("cli_celular").value;
+                if (ci != '' && nombre != '' && genero != '' && direccion != '' && celular != '') {
+                    document.getElementById("create_cliente").disabled = false;
+                }else{
+                    document.getElementById("create_cliente").disabled = true;
+                }
+            }
         </script>
     </body>
 </html>
