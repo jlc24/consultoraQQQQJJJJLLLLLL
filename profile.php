@@ -119,7 +119,6 @@ $row = $resultado->fetch_assoc();
                                             </div>
                                             <hr>
                                             <div class="d-flex justify-content-center mb-2">
-                                                
                                                 <button type="button" class="btn btn-outline-warning ms-1">Editar datos</button>
                                             </div>
                                             
@@ -146,7 +145,7 @@ $row = $resultado->fetch_assoc();
                                             </div>
                                             <hr>
                                             <div class="d-flex justify-content-center mb-2">
-                                                <button type="button" class="btn btn-outline-warning ms-1">Editar datos</button>
+                                                <button type="button" class="btn btn-outline-warning ms-1" id="update_user" name="update_user">Editar datos</button>
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +154,24 @@ $row = $resultado->fetch_assoc();
                         </div>
                     </section>
                    
-                    
+                    <div id="modal_actualizar_usuario" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Actualizar Datos de la cuenta</h4>
+                                </div>
+                                <div class="modal-body" id="actualizar_usuario">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="close_usuario" class="btn btn-secondary waves-effect" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" id="update_usuario" class="btn btn-purple waves-effect" data-dismiss="modal">Actualizar Cuenta</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
                     <!-- end row -->
                     <!-- /.MENSAJES -->
                     <div id="modal_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -439,6 +455,53 @@ $row = $resultado->fetch_assoc();
                         });
                     }
                 })
+            });
+            $(document).on("click", "#update_user", function() {
+                dato = <?php echo $adm_id ?>;
+                cadena = "hoja_id="+dato;
+                //alert(cadena); return false;
+                //https://jsonformatter.org/jsbeautifier
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_hoja_id.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $('#modal_actualizar_usuario').on('hidden.bs.modal', function() {
+                                $(this).find('#formulario_actualizar_usuario')[0].reset();
+                            });
+                            $('#actualizar_usuario').load('modal_update_usuario.php');
+                            $('#modal_actualizar_usuario').modal('show');
+                        }
+                    }
+                });
+            });
+            $('#update_usuario').click(function(){
+                var datos = $('#formulario_actualizar_usuario').serialize();
+                //alert(datos); return false;
+                $.ajax({
+                    type:"POST",
+                    url:"assets/inc/update_usuario.php",
+                    data:datos,
+                    success:function(response){
+                        if(response==1){
+                            $('#tabla_usuario').load('tabla_usuario.php');
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Actualizacion Exitosamente.',
+                                showConfirmButton: false,
+                                    timer: 2000//1500
+                                })
+                        }else{
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                    timer: 2000//1500
+                                })
+                        }
+                    }
+                });
             });
 
     </script>

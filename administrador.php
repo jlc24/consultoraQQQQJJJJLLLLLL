@@ -48,7 +48,7 @@ $row = $resultado->fetch_assoc();
                                         </ol>
                                     </div>
                                     <h4 class="page-title">
-                                        <a style="color:purple;" href="#" data-toggle="modal" data-target="#modal_crear_administrador" title="Registrar Cliente">
+                                        <a style="color:purple;" href="#" data-toggle="modal" data-target="#modal_crear_administrador" title="Registrar Administrador">
                                             <i class="far fa-plus-square"></i>
                                         </a>Adm. Áreas Laborales
                                     </h4>
@@ -70,6 +70,19 @@ $row = $resultado->fetch_assoc();
 
                                 <?php include "modal_create_administrador.php"; ?>
                                 <?php /*include "modal_update_administrador.php";*/ ?>
+                                <div id="modal_actualizar_administrador" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="myModalLabel">Actualizar usuario Administrador</h4>
+                                            </div>
+                                            <div class="modal-body" id="actualizar_administrador">
+
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
 
                                 <!--=================================================================================
                                 =   MODAL PARA VER LOS MENSAJES RECIBIDOS Y ENVIADOS ENTRE LOS ADMINISTRADORES  =
@@ -139,22 +152,12 @@ $row = $resultado->fetch_assoc();
 
         <!--=============================  CLIENTES  =============================-->
         <script>
-            function EditarCliente(datos){
-                //alert(datos);
-                vector=datos.split('||');
-                $('#cli_id').val(vector[0]);
-                $('#cli_ci_nit_update').val(vector[1]);
-                $('#cli_nombre_update').val(vector[2]);
-                $('#cli_genero_update').val(vector[3]);
-                $('#cli_direccion_update').val(vector[4]);
-                $('#cli_celular_update').val(vector[5]);
-                $('#cli_saldo_billetera_update').val(vector[7]);
-            }
-
-            function EliminarCliente(datos) {
-                vector = datos.split('||');
+            $(document).on("click", ".btnEliminarAdministrador", function() {
+                cadena = "adm_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                nombre = $(this).closest('tr').find('td:eq(2)').text();
+                //alert(nombre); return false;
                 Swal.fire({
-                    title: 'Se Borrará a ' + vector[1],
+                    title: 'Se Eliminará a ' + nombre,
                     text: "No podrás revertir esto!",
                     type: 'warning',
                     showCancelButton: true,
@@ -164,7 +167,7 @@ $row = $resultado->fetch_assoc();
                     confirmButtonText: 'Si, eliminarlo!'
                 }).then((result) => {
                     if(result.value) {
-                        cadena = "id=" + vector[0];
+                        
                         //alert(cadena);
                         $.ajax({
                             url: "assets/inc/delete_administrador.php",
@@ -175,7 +178,7 @@ $row = $resultado->fetch_assoc();
                                     $('#tabla_administrador').load('tabla_administrador.php');
                                     Swal.fire({
                                         type: 'success',
-                                        title: 'Tu registro a sido Borrado.',
+                                        title: 'El administrador ' +nombre+ ' a sido eliminado.',
                                         showConfirmButton: false,
                                         timer: 2000
                                     })
@@ -184,7 +187,7 @@ $row = $resultado->fetch_assoc();
                         });
                     }
                 })
-            }
+            })
             //------------------------------------------------------------------------------------//
             //------------------------------------------------------------------------------------//
             $(document).ready(function() {
@@ -304,29 +307,46 @@ $row = $resultado->fetch_assoc();
                 $('#tabla_administrador').load('tabla_administrador.php');
             // COLOCAMOS EN FOCO EN EL INPUT CI/NIT
                 $('#modal_crear_administrador').on('shown.bs.modal',function(){
-                    $('#cli_ci_nit').trigger('focus');
+                    $('#adm_ci_nit').trigger('focus');
                 });
             // 2.  REGISTRO DE UN NUEVO CLIENTE
-                $('#create_administrador').click(function(){
-                    var datos = $('#formulario_crear_administrador').serialize();
-                    alert(datos); return false;
+                $('#create_administrador').click(function(){                    
+                    var file_data = $("#upload_foto").prop("files")[0];
+                    var datos = new FormData();
+                    
+                    datos.append("upload_foto", file_data);
+                    datos.append("adm_ci_nit", $("#adm_ci_nit").val());
+                    datos.append("adm_nombre", $("#adm_nombre").val());
+                    datos.append("adm_direccion", $("#adm_direccion").val());
+                    datos.append("adm_celular", $("#adm_celular").val());
+                    datos.append("adm_area", $("#adm_area").val());
+                    datos.append("usuario_user", $("#usuario_user").val());
+                    datos.append("usuario_pass", $("#usuario_pass").val());
+                    for (var value of datos.values()) {
+                        console.log(value);
+                    }
+                    //alert(datos); return false;
                     $.ajax({
-                        type:"POST",
+                        cahe: false,
+                        contentType: false,
+                        data: datos,
+                        dataType: 'JSON',
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        method:"POST",
                         url:"assets/inc/create_administrador.php",
-                        data:datos,
                         success:function(response){
                             if (response == 1) {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Administrador agregado exitosamente.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
                                 $('#tabla_administrador').load('tabla_administrador.php');
                                 $('#modal_crear_administrador').on('hidden.bs.modal', function (){
                                     $(this).find('#formulario_crear_administrador')[0].reset();
                                 });
-                                /*$('#c_paciente')[0].reset();*/ //Limpia los inputs del formulario con id=c_paciente*/
-                                Swal.fire({
-                                    type: 'success',
-                                    title: 'Cliente Agregado Exitosamente.',
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
                             } else {
                                 Swal.fire({
                                     type: 'error',
@@ -366,9 +386,68 @@ $row = $resultado->fetch_assoc();
                         }
                     });
                 });
-            //------------------------------------------------------------------------------------//
-            //------------------------------------------------------------------------------------//
             });
+            function showError(cadena){
+                var dato = $('#'+cadena).val();
+                if (dato != '') {
+                    document.getElementById("error_"+cadena).style.display = "none";
+                }else{
+                    document.getElementById("error_"+cadena).style.display = "";
+                }
+            }
+            function showErrorPass(cadena){
+                var dato = $('#'+cadena).val();
+                if (dato != '') {
+                    document.getElementById("error_"+cadena).style.display = "none";
+                    document.getElementById("error_usuario_pass_ok").style.display = 'none';
+                    document.getElementById("error_usuario_pass_ok2").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif2").style.display = 'none';
+                }else{
+                    document.getElementById("error_"+cadena).style.display = "";
+                    document.getElementById("error_usuario_pass_ok").style.display = 'none';
+                    document.getElementById("error_usuario_pass_ok2").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif2").style.display = 'none';
+                }
+            }
+            function verifPass(){
+                var pass1 = document.getElementById("usuario_pass").value;
+                var pass2 = document.getElementById("usuario_pass_verif").value;
+                if (pass2 == "" || pass1 == "") {
+                    document.getElementById("error_usuario_pass_ok").style.display = 'none';
+                    document.getElementById("error_usuario_pass_ok2").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif2").style.display = 'none';
+                }else if(pass2 == pass1){
+                    document.getElementById("error_usuario_pass_ok").style.display = '';
+                    document.getElementById("error_usuario_pass_ok2").style.display = '';
+                    document.getElementById("error_usuario_pass_noverif").style.display = 'none';
+                    document.getElementById("error_usuario_pass_noverif2").style.display = 'none';
+                }else{
+                    document.getElementById("error_usuario_pass_noverif").style.display = '';
+                    document.getElementById("error_usuario_pass_noverif2").style.display = '';
+                    document.getElementById("error_usuario_pass_ok").style.display = 'none';
+                    document.getElementById("error_usuario_pass_ok2").style.display = 'none';
+                    document.getElementById("usuario_pass").value = '';
+                    document.getElementById("usuario_pass_verif").value = '';
+                    document.getElementById("usuario_pass").focus();
+                }
+            }
+            function verificar() {
+                var ci = document.getElementById("adm_ci_nit").value;
+                var nombre = document.getElementById("adm_nombre").value;
+                var area = document.getElementById("adm_area").value;
+                var user = document.getElementById("usuario_user").value;
+                var pass = document.getElementById("usuario_pass").value;
+                var passverif = document.getElementById("usuario_pass_verif").value;
+                if (ci != "" && nombre != "" && area != "" && user != "" && pass != "" && passverif != "") {
+                    document.getElementById("create_administrador").disabled = false;
+                }else{
+                    document.getElementById("create_administrador").disabled = true;
+                }
+                  
+            }
         </script>
     </body>
 </html>

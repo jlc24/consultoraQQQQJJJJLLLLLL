@@ -43,7 +43,7 @@
                                 <option value="SEGUIMIENTO">SEGUIMIENTO</option>
                                 <option value="FINALIZADO">FINALIZADO</option>
                             </select>
-                            <span style="color: red;" id="error_detalle_etapa">(Elija una opcion)</span>
+                            <small><span style="color: red;" id="error_detalle_etapa">(Elija una opcion)</span></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -56,7 +56,7 @@
                                 <option value="SEGUIMIENTO">SEGUIMIENTO</option>
                                 <option value="AUDIENCIA">AUDIENCIA</option>
                             </select>
-                            <span style="color: red;" id="error_accion">(Elija una opcion)</span>
+                            <small><span style="color: red;" id="error_accion">(Elija una opcion)</span></small>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -69,14 +69,14 @@
                         <label class="col-md-4 col-form-label" >Fecha Respuesta</label>
                         <div class="col-md-8">
                             <input type="datetime-local" id="detalle_fecha_fin" name="detalle_fecha_fin" class="form-control form-control-sm" onchange="showError('detalle_fecha_fin'); verificar()">
-                            <span style="color: red;" id="error_detalle_fecha_fin">(Se requiere Fecha Fin)</span>
+                            <small><span style="color: red;" id="error_detalle_fecha_fin">(Se requiere Fecha Fin)</span></small>
                         </div>
                     </div>
                     <div class="form-group row" id="audiencia" style="display: none;">
                         <label class="col-md-4 col-form-label">Fecha Audiencia</label>
                         <div class="col-md-8">
                             <input type="datetime-local" id="detalle_audiencia" name="detalle_audiencia" class="form-control form-control-sm" onchange="showError('detalle_audiencia'); verificar()">
-                            <span style="color: red;" id="error_detalle_audiencia">(Se requiere Fecha Audiencia)</span>
+                            <small><span style="color: red;" id="error_detalle_audiencia">(Se requiere Fecha Audiencia)</span></small>
                         </div>
                     </div>
                     <?php 
@@ -89,9 +89,9 @@
                                         <option value="INSTRUCCION PENAL">INSTRUCCION PENAL</option>
                                         <option value="SENTENCIA PENAL">SENTENCIA PENAL</option>
                                     </select>
-                                    <span style="color: red;" id="error_lugar_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_lugar_juzgado">(Se requiere Sala de juzgado)</span></small>
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                         <?php
@@ -101,7 +101,7 @@
                                 <div class="col-md-8">
                                     <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="Público de Familia">
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                     <?php        
@@ -111,7 +111,7 @@
                                 <div class="col-md-8">
                                     <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="Público Civil y Comercial">
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                     <?php        
@@ -121,7 +121,7 @@
                                 <div class="col-md-8">
                                     <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="AIT">
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" value="0" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                     <?php        
@@ -131,7 +131,7 @@
                                 <div class="col-md-8">
                                     <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="ADUANA">
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" value="0" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                     <?php        
@@ -141,7 +141,7 @@
                                 <div class="col-md-8">
                                     <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="ADMINISTRATIVO">
                                     <input type="text" id="detalle_juzgado" name="detalle_juzgado" value="0" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
-                                    <span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span>
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
                                 </div>
                             </div>
                     <?php        
@@ -158,7 +158,7 @@
                         <label class="col-md-4 col-form-label">Observación</label>
                         <div class="col-md-8">
                             <textarea class="form-control" rows="3" id="detalle_observacion" name="detalle_observacion" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="showError('detalle_observacion'); verificar()"></textarea>
-                            <span style="color: red;" id="error_detalle_observacion">(Se requiere Observacion)</span>
+                            <small><span style="color: red;" id="error_detalle_observacion">(Se requiere Observacion)</span></small>
                         </div>
                     </div>
                     <div class="form-group row" id="field_f" style="display: none;">
@@ -182,7 +182,7 @@
                                     }
                                 ?>
                             </select>
-                            <span style="color: red;" id="error_responsable_area">(Elija una opcion)</span>
+                            <small><span style="color: red;" id="error_responsable_area">(Elija una opcion)</span></small>
                         </div>
                     </div>
 

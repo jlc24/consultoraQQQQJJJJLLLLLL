@@ -48,13 +48,8 @@ $row = $resultado->fetch_assoc();
                         <div class="col-12">
                             <div class="page-title-box">
                                 <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">QJL</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Panel de Control</a></li>
-                                        <li class="breadcrumb-item active">Parámetros</li>
-                                    </ol>
                                 </div>
-                                <h4 class="page-title">Configuración de Parámetros</h4>
+                                <h4 class="page-title">Configuración de Parámetro</h4>
                             </div>
                         </div>
                     </div>

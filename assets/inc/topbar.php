@@ -38,10 +38,15 @@
                             </a>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="fe-settings"></i>
-                                <span>Configuraciones</span>
-                            </a>
+                            <?php
+                                if ($row['adm_id'] == '9' || $row['adm_id'] == '1') {?>
+                                    <a href="config.php" class="dropdown-item notify-item">
+                                        <i class="fe-settings"></i>
+                                        <span>Configuraciones</span>
+                                    </a>
+                            <?php
+                                }
+                                ?>
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->

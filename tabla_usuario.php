@@ -49,9 +49,9 @@
                 <th data-priority="1">ID</th>
                 <th data-priority="2">Nombre Completo</th>
                 <th data-priority="3">Usuario</th>
-                <th data-priority="5">Contraseña</th>
-                <th data-priority="4">Rol</th>
-                <th data-priority="6">Op.</th>
+                <th data-priority="4">Contraseña</th>
+                <th data-priority="5">Rol</th>
+                <th data-priority="1">Op.</th>
             </thead>
             <tbody>
                 <?php
@@ -65,10 +65,17 @@
                         <td><?php echo $registro["adm_id"]; ?></td>
                         <td><?php echo $registro["adm_nombre"]; ?></td>
                         <td><?php echo $registro["adm_usuario"]; ?></td>
-                        <td><?php echo $registro["adm_pass"]; ?></td>
+                        <td><?php
+                            if ($registro['adm_pass'] != "") { ?>
+                                ****************
+                            <?php
+                            }
+                        ?></td>
                         <td><?php echo $registro["adm_rol"]; ?></td>
                         <td>
-                            <a href='javascript:void(0);' data-toggle='modal' data-target='#modal_actualizar_usuario' onclick="EditarUsuario('<?php echo $datos; ?>')" title='Editar Cuenta'><i style='color: purple; --darkreader-inline-color:#230443; font-size:20px;' class='icon-note' data-darkreader-inline-color=''></i></a>
+                            <a href='javascript:void(0);' id="update_users" name="update_users" title='Editar Cuenta'>
+                                <i style='color: #DC5C05; --darkreader-inline-color:#230443; font-size:20px;' class='far fa-edit' data-darkreader-inline-color=''></i>
+                            </a>
                         </td>
                     </tr>
                 <?php

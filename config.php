@@ -48,11 +48,7 @@ $row = $resultado->fetch_assoc();
                         <div class="col-12">
                             <div class="page-title-box">
                                 <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">QJL</a></li>
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Panel de Control</a></li>
-                                        <li class="breadcrumb-item active">Parámetros</li>
-                                    </ol>
+                                    
                                 </div>
                                 <h4 class="page-title">Configuración de Parámetros</h4>
                             </div>
@@ -63,14 +59,12 @@ $row = $resultado->fetch_assoc();
                     <!--========================================
                         =            Contenido Principal           =
                     =========================================-->
-                    <?php include "modal_update_usuario.php"; ?>
-                    <div class="row">
+                    
+                    <?php include "modal_create_administrador.php"; ?>
+                    <!--<div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
                                 <h4 class="header-title">Tipo de Cambio</h4>
-                                <!--<p class="sub-header">
-                                    You may also swap <code class="highlighter-rouge">.row</code> for <code class="highlighter-rouge">.form-row</code>, a variation of our standard grid row that overrides the default column gutters for tighter and more compact layouts.
-                                </p>-->
 
                                 <form id="update_form_tipo_cambio">
                                     <div class="form-row">
@@ -94,9 +88,9 @@ $row = $resultado->fetch_assoc();
                                                   step="0.01"
                                                   class="form-control" id="tipo_cambio" name="tipo_cambio"
                                                   aria-label="Username"
-                                                  value="<?php $consulta = "SELECT tipo_cambio FROM configuracion";
-                                                  $fila = mysqli_fetch_row(mysqli_query($conexion,$consulta));
-                                                  echo number_format((float)$fila[0], 2, '.', ''); ?>">
+                                                  value="<?php //$consulta = "SELECT tipo_cambio FROM configuracion";
+                                                  //$fila = mysqli_fetch_row(mysqli_query($conexion,$consulta));
+                                                  //echo number_format((float)$fila[0], 2, '.', ''); ?>">
                                                   
                                             </div>
                                         </div>
@@ -106,13 +100,12 @@ $row = $resultado->fetch_assoc();
                             </div>
                         </div>
                     </div>
-                    <!-- end row -->
+                     end row -->
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                <h4 class="header-title"><a style="color:purple;" href="#" data-toggle="modal" data-target="#modal_crear_usuario" title="Registrar Administrador o Vendedor">
-                                            <i class="far fa-plus-square"></i></a>&nbsp;Administración de Usuarios del Sistema</h4>
+                                <h4 class="header-title">Administración de Usuarios del Sistema</h4>
                                 <!-- inicio tabla usuarios -->
                                 <div class="card-box table-responsive" id="tabla_usuario">
 
@@ -121,6 +114,23 @@ $row = $resultado->fetch_assoc();
                             </div>
                         </div>
                     </div>
+                    <div id="modal_actualizar_usuario" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Actualizar Datos de la cuenta</h4>
+                                </div>
+                                <div class="modal-body" id="actualizar_usuario">
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="close_usuario" class="btn btn-secondary waves-effect" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" id="update_usuario" class="btn btn-purple waves-effect" data-dismiss="modal">Actualizar Cuenta</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                     <!-- end row -->
                     <!-- /.MENSAJES -->
                     <div id="modal_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -183,44 +193,53 @@ $row = $resultado->fetch_assoc();
     <script type="text/javascript">
         //CARGAMOS TODOS LOS USUARIOS DEL SISTEMA, ADMINISTRADORES Y VENDEDORES
         $('#tabla_usuario').load('tabla_usuario.php');
-        //EDITAR DATOS DE USUARIOS
-        function EditarUsuario(datos){
-            //alert(datos);
-            vector=datos.split('||');
-            $('#usuario_id_update').val(vector[0]);
-            $('#usuario_nombre_update').val(vector[1]);
-            $('#usuario_user_update').val(vector[2]);
-            $('#usuario_pass_update').val(vector[3]);
-            $('#usuario_rol_update').val(vector[4]);
-        }
-
+        
+        $(document).on("click", "#update_users", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#modal_actualizar_usuario').on('hidden.bs.modal', function() {
+                            $(this).find('#formulario_actualizar_usuario')[0].reset();
+                        });
+                        $('#actualizar_usuario').load('modal_update_usuario.php');
+                        $('#modal_actualizar_usuario').modal('show');
+                    }
+                }
+            });
+        });
         // ACTUALIZACION DATOS DE USUARIOS
         $('#update_usuario').click(function(){
-                var datos = $('#formulario_actualizar_usuario').serialize();
-                //alert(datos); return false;
-                $.ajax({
-                    type:"POST",
-                    url:"assets/inc/update_usuario.php",
-                    data:datos,
-                    success:function(response){
-                        if(response==1){
-                            $('#tabla_usuario').load('tabla_usuario.php');
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Actualizacion Exitosamente.',
-                                showConfirmButton: false,
-                                    timer: 2000//1500
-                                })
-                        }else{
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Se ha Producido un Error.',
-                                showConfirmButton: false,
-                                    timer: 2000//1500
-                                })
-                        }
+            var datos = $('#formulario_actualizar_usuario').serialize();
+            //alert(datos); return false;
+            $.ajax({
+                type:"POST",
+                url:"assets/inc/update_usuario.php",
+                data:datos,
+                success:function(response){
+                    if(response==1){
+                        $('#tabla_usuario').load('tabla_usuario.php');
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Actualizacion Exitosamente.',
+                            showConfirmButton: false,
+                                timer: 2000//1500
+                            })
+                    }else{
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Se ha Producido un Error.',
+                            showConfirmButton: false,
+                                timer: 2000//1500
+                            })
                     }
-                });
+                }
+            });
         });
 
 
@@ -395,8 +414,38 @@ $row = $resultado->fetch_assoc();
             $('#modal_actualizar_usuario').on('shown.bs.modal',function(){
                     //$('#nota_titulo').trigger('focus'); $('#prod_stock_update').focus();
             });
-
-        });
+            $('#create_administrador').click(function(){
+                var datos = $('#formulario_crear_administrador').serialize();
+                alert(datos); return false;
+                $.ajax({
+                    type:"POST",
+                    url:"assets/inc/create_administrador.php",
+                    data:datos,
+                    success:function(response){
+                        if (response == 1) {
+                            $('#tabla_administrador').load('tabla_administrador.php');
+                            $('#modal_crear_administrador').on('hidden.bs.modal', function (){
+                                $(this).find('#formulario_crear_administrador')[0].reset();
+                            });
+                            /*$('#c_paciente')[0].reset();*/ //Limpia los inputs del formulario con id=c_paciente*/
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Cliente Agregado Exitosamente.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                });
+            });
+    });
     </script>
 </body>
 </html>

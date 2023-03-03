@@ -875,6 +875,19 @@ $row = $resultado->fetch_assoc();
                     }
                 });
             });
+            function verificarCliente() {
+                var cliente = document.getElementById("cli_id").value;
+                if (cliente == '') {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Cliente no encontrado, por favor registre al cliente',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    document.getElementById("hoja_nombre_solicitante").value = '';
+                    $('#modal_crear_cliente').modal('show');
+                }
+            }
         </script>
     </body>
 </html>

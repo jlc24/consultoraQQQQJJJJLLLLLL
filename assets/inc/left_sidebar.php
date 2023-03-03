@@ -23,12 +23,17 @@
                                     <span> Clientes </span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="administrador.php">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span> Administradores </span>
-                                </a>
-                            </li>
+                            <?php
+                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
+                                    <li>
+                                        <a href="administrador.php">
+                                            <i class="fas fa-user-tie"></i>
+                                            <span> Administradores </span>
+                                        </a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fas fa-balance-scale"></i>
@@ -82,7 +87,7 @@
                                 </ul>
                             </li>
                             <?php
-                                if ($row['adm_area'] == 'CONTABILIDAD') {?>
+                                if ($row['adm_area'] == 'CONTABILIDAD' || $row['adm_area'] == 'MARKETING') {?>
                                     <li>
                                         <a href="javascript: void(0);">
                                             <i class="fas fa-dollar-sign"></i>
@@ -100,7 +105,7 @@
                                 }
                             ?>
                             <?php
-                                if ($row['adm_area'] == 'MARKETING') {?>
+                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
                                     <li>
                                         <a href="javascript: void(0);">
                                             <i class="fas fa-laptop-code"></i>
@@ -136,10 +141,15 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="config.php">
-                                    <i class="fas fa-cog"></i>
-                                    <span> Configuración </span>
-                                </a>
+                            <?php
+                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
+                                    <a href="config.php">
+                                        <i class="fas fa-cog"></i>
+                                        <span> Configuración </span>
+                                    </a>
+                                <?php
+                                }
+                                ?>
                             </li>
                         </ul>
 
