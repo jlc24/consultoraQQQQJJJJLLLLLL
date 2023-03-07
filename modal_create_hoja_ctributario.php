@@ -62,7 +62,7 @@
                                     <input type="text" id="hoja_numero_tramite" name="hoja_numero_tramite" 
                                     class="form-control form-control-md" style="text-transform: uppercase;" 
                                     onkeyup="javascript:this.value=this.value.toUpperCase();" 
-                                    value="<?php $fila = mysqli_fetch_row(mysqli_query($conexion,"SELECT COUNT(*) FROM hoja WHERE hoja_area_proceso = 'CIVIL';"));
+                                    value="<?php $fila = mysqli_fetch_row(mysqli_query($conexion,"SELECT COUNT(*) FROM hoja WHERE hoja_area_proceso = 'CONTENCIOSO TRIBUTARIO';"));
                                     $numero_hoja_ruta = (int)$fila[0]+1; echo 'QJCT-'.$numero_hoja_ruta ?>">
                                 </div>
                             </div>
