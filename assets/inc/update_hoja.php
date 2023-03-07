@@ -37,6 +37,9 @@
 		$demandante = $cli;
 		$demandado = $contra;
 		$patr = 'DENUNCIADO';
+	}elseif ($_POST['patrocinio_update_cliente'] == 'DEMANDANTE' && $area_proc == 'CONTENCIOSO TRIBUTARIO') {
+		$demandante = $cli;
+		$demandado = $contra;
 	}
 	
 	$patr = $_POST['patrocinio_update_cliente'];

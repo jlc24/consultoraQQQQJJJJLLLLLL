@@ -51,7 +51,7 @@
                                         echo "
                                         <li><a href='hoja_ruta_administrativo.php'>Administrativo</a></li>
                                         <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
-                                        <li><a href='#'>Contenciosos Tributario</a></li>
+                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
                                         <li><a href='hoja_ruta_familia.php'>Familia</a></li>
                                         ";
                                     }elseif ($adm_id == '7') {
@@ -69,7 +69,7 @@
                                         <li><a href='hoja_ruta_aduana.php'>Aduana</a></li>
                                         <li><a href='hoja_ruta_penal_ad.php'>Penal Aduanero</a></li>
                                         <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
-                                        <li><a href='#'>Contenciosos Tributario</a></li>
+                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
                                         ";
                                     }else{
                                         echo "
@@ -77,7 +77,7 @@
                                         <li><a href='hoja_ruta_aduana.php'>Aduana</a></li>
                                         <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
                                         <li><a href='hoja_ruta_civil.php'>Civil</a></li>
-                                        <li><a href='#'>Contenciosos Tributario</a></li>
+                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
                                         <li><a href='hoja_ruta_familia.php'>Familia</a></li>
                                         <li><a href='hoja_ruta_penal.php'>Penal</a></li>
                                         <li><a href='hoja_ruta_penal_ad.php'>Penal Aduanero</a></li>
