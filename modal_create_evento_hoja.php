@@ -145,6 +145,16 @@
                                 </div>
                             </div>
                     <?php        
+                        }elseif ($row['hoja_area_proceso'] == 'CONTENCIOSO TRIBUTARIO') { ?>
+                            <div class="form-group row" id="juzgado" style="display: none;" hidden>
+                                <label class="col-md-4 col-form-label">Juzgado de Partido de Trabajo</label>
+                                <div class="col-md-8">
+                                    <input type="hidden" id="lugar_juzgado" name="lugar_juzgado" value="CTRIBUTARIO">
+                                    <input type="text" id="detalle_juzgado" name="detalle_juzgado" value="0" class="form-control form-control-sm" onchange="showError('detalle_juzgado'); verificar()">
+                                    <small><span style="color: red;" id="error_detalle_juzgado">(Se requiere Sala de juzgado)</span></small>
+                                </div>
+                            </div>
+                    <?php        
                         }
                     ?>
                     
