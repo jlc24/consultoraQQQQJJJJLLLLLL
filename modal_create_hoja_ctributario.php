@@ -10,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Registrar Hoja de Ruta Civil</h4>
+                    <h4 class="modal-title" id="myModalLabel">Registrar Hoja de Ruta Contencioso Tributario</h4>
                 </div>
                 <div class="modal-body">
                     <form id="formulario_crear_hoja" action="#" class="parsley_create_hoja" novalidate="">
@@ -21,7 +21,7 @@
                                 
                                 <div class="col-md-8 input-group">
                                     <input type="hidden" class="form-control form-control-md" id="cli_id" name="cli_id">
-                                    <input type="hidden" class="form-control form-control-md" id="area_proceso" name="area_proceso" value="CIVIL">
+                                    <input type="hidden" class="form-control form-control-md" id="area_proceso" name="area_proceso" value="CONTENCIOSO TRIBUTARIO">
                                     <input type="hidden" class="form-control form-control-md" id="admin" name="admin" value="<?php echo $admid; ?>">
                                     <input type="text" class="form-control form-control-md" id="hoja_nombre_solicitante" name="hoja_nombre_solicitante" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                     <div class="input-group-append">
@@ -34,11 +34,7 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">Patrocinio</label>
                                 <div class="col-md-8">
-                                    <select class="custom-select custom-select-sm" id="hoja_actor_cliente" name="hoja_actor_cliente" >
-                                        <option selected="">---- SELECCIONAR ----</option>
-                                        <option value="DEMANDANTE">DEMANDANTE</option>
-                                        <option value="DEMANDADO">DEMANDADO</option>
-                                    </select>
+                                    <input type="text" id="hoja_actor_cliente" name="hoja_actor_cliente" class="form-control form-control-md" value="DEMANDANTE" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -89,8 +85,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label">Juzgado Público Civil y Comercial</label>
-                                <div class="col-md-8">
+                                <label class="col-md-6 col-form-label">Juzgado de Partido del Trabajo y Seguridad Social Administrativo, Coactivo Fiscal y Tributario</label>
+                                <div class="col-md-6">
                                     <input type="text" id="hoja_num_juzgado" name="hoja_num_juzgado" class="form-control form-control-md" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                 </div>
                             </div>

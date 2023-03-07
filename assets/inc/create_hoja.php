@@ -40,6 +40,10 @@
 		$demandante = $cli;
 		$demandado = $contra;
 		$patr = 'DENUNCIADO';
+	}elseif ($_POST['hoja_actor_cliente'] == 'DEMANDANTE' && $area_proc == 'CONTENCIOSO TRIBUTARIO') {
+		$demandante = $cli;
+		$demandado = $contra;
+		$patr = 'DEMANDADO';
 	}
 	//$patr = $_POST['hoja_actor_cliente'];
 	$tipo_proc = $_POST['hoja_tipo_delito'];
