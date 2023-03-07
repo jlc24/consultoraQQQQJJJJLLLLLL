@@ -40,7 +40,7 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label ui-front">En contra de</label>
                                 <div class="col-md-8">
-                                    <input type="text" id="hoja_nom_contra" name="hoja_nom_contra" class="form-control form-control-md" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    <input type="text" id="hoja_nom_contra" name="hoja_nom_contra" class="form-control form-control-md" onkeyup="javascript:this.value=this.value.toUpperCase(); verificarCliente()">
                                 </div>
                             </div>
                             <div class="form-group row" hidden>
@@ -69,7 +69,7 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">NUREJ</label>
                                 <div class="col-md-8">
-                                    <input type="text" id="hoja_id_proc" name="hoja_id_proc" class="form-control form-control-md">
+                                    <input type="text" id="hoja_id_proc" name="hoja_id_proc" class="form-control form-control-md" onkeyup="verificarCliente()">
                                 </div>
                             </div>
                             <div class="form-group row">
