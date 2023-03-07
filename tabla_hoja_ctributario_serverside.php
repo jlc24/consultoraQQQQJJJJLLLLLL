@@ -13,7 +13,7 @@
                     }],
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": "serverside_hoja_civil.php",
+                    "sAjaxSource": "serverside_hoja_ctributario.php",
                     "lengthMenu":[5,10,15,20],
                     "order": [[ 0,"desc" ]],//ORDERNAR DESCENDENTEMENTE POR EL ID DE LA HOJA DE RUTA
                     "language": {
