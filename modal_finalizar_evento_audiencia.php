@@ -49,7 +49,6 @@
                     <input type="hidden" id="detalle_id" name="detalle_id" value="<?php echo $row['det_id'] ?>">
                     <input type="text" min="0" id="hoja_numero_tramite_update" name="hoja_numero_tramite_update" class="form-control form-control-sm" value="<?php echo $row['hoja_numero_tramite']; ?>" readonly>
                     <input type="hidden" id="admin_eve" name="admin_eve" value="<?php echo $admid;?>">
-                    <input type="hidden" id="identificador" name="identificador" value="recepcion_file">
                 </div>
             </div>
             <div class="form-group row">
@@ -103,6 +102,7 @@
                         <label class="col-md-4 col-form-label">Estado proceso</label>
                         <div class="col-md-8">
                             <input type="text" id="det_estado_update" name="det_estado_update" class="form-control form-control-sm" style="text-transform: uppercase;" value="FINALIZADO" readonly>
+                            <input type="text" id="det_leido" name="det_leido" class="form-control form-control-sm" style="text-transform: uppercase;" value="2" readonly>
                         </div>
                     </div>
                 <?php

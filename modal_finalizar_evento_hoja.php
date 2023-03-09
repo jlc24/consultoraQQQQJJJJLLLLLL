@@ -29,6 +29,7 @@
                     `det_observacion`,
                     `det_encargado`,
                     `det_respuesta_encargado`,
+                    det_mensaje,
                     det_envio_ruta_file,
                     `fec_reg_evento`,
                     `enc_reg`    
@@ -54,7 +55,6 @@
                                 <input type="hidden" id="detalle_id" name="detalle_id" value="<?php echo $row['det_id'] ?>">
                                 <input type="text" min="0" id="hoja_numero_tramite_update" name="hoja_numero_tramite_update" class="form-control form-control-sm" value="<?php echo $row['hoja_numero_tramite']; ?>" readonly>
                                 <input type="hidden" id="admin_eve" name="admin_eve" value="<?php echo $admid;?>">
-                                <input type="hidden" id="identificador" name="identificador" value="recepcion_file">
                             </div>
                         </div><br>
                         <div class="form-group row">
@@ -108,6 +108,7 @@
                             <label class="col-md-4 col-form-label">Estado proceso</label>
                             <div class="col-md-8">
                                 <input type="text" id="det_estado_update" name="det_estado_update" class="form-control form-control-sm" style="text-transform: uppercase;" value="FINALIZADO" readonly>
+                                <input type="text" id="det_leido" name="det_leido" class="form-control form-control-sm" style="text-transform: uppercase;" value="2" readonly>
                             </div>
                         </div>
                     </div>
@@ -123,7 +124,6 @@
                             <input type="hidden" id="detalle_id" name="detalle_id" value="<?php echo $row['det_id'] ?>">
                             <input type="text" min="0" id="hoja_numero_tramite_update" name="hoja_numero_tramite_update" class="form-control form-control-sm" value="<?php echo $row['hoja_numero_tramite']; ?>" readonly>
                             <input type="hidden" id="admin_eve" name="admin_eve" value="<?php echo $admid;?>">
-                            <input type="hidden" id="identificador" name="identificador" value="recepcion_file">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -150,12 +150,25 @@
                             <input type="text" id="det_accion_update" name="det_accion_update" class="form-control form-control-sm" style="text-transform: uppercase;" value="<?php echo $row['det_accion']; ?>" readonly>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Tarea</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control" name="det_observacion" id="det_observacion" rows="3" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly><?php echo $row['det_observacion'];?></textarea>
-                        </div>
-                    </div>
+                    <?php
+                        if ($row['det_mensaje'] == '') { ?>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Tarea</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="det_observacion" id="det_observacion" rows="3" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly><?php echo $row['det_observacion'];?></textarea>
+                                </div>
+                            </div>
+                    <?php
+                        }else { ?>
+                             <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Tarea</label>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" name="det_observacion" id="det_observacion" rows="3" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" readonly><?php echo $row['det_mensaje'];?></textarea>
+                                </div>
+                            </div>
+                    <?php
+                        }
+                    ?>
                     <?php 
                         if ($row['det_envio_ruta_file'] == '') { ?>
                             <div class="form-group row">
@@ -169,7 +182,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label">Archivo</label>
                                 <div class="col-md-9">
-                                    <a name="file" id="file" class="btn btn-primary" href="<?php echo $row['det_envio_ruta_file']; ?>" role="button" target="_blank" rel="noreferrer noopener">Descargar archivo adjunto</a>
+                                    <a name="file" id="file" class="btn btn-primary" href="<?php echo $row['det_envio_ruta_file']; ?>" role="button" target="_blank" rel="noreferrer noopener">Descargar archivo adjunto </a><img src="assets/images/icons/document.svg" alt="" width="40PX">
                                 </div>
                             </div>
                     <?php
@@ -184,12 +197,14 @@
                 </div>
                 <div class="col-6 py-1" style="border-style: solid; border-color: #E67E22; border-width: 1px; border-radius: 5px;">
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label">Comentario de Finalización</label>
-                        <div class="col-md-8">
+                        <label class="col-md-12 col-form-label">Comentario de Finalización</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
                             <textarea class="form-control" name="det_respuesta" id="det_respuesta" rows="3" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" onkeydown="showError('det_respuesta'); verif('fin')"></textarea>
                             <span style="color: red;" id="error_det_respuesta">(Se requiere Observacion)</span>
                         </div>
-                    </div>
+                    </div><hr>
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Adjuntar archivos</label>
                     </div>
@@ -202,6 +217,7 @@
                         <label class="col-md-4 col-form-label">Estado proceso</label>
                         <div class="col-md-8">
                             <input type="text" id="det_estado_update" name="det_estado_update" class="form-control form-control-sm" style="text-transform: uppercase;" value="FINALIZADO" readonly>
+                            <input type="text" id="det_leido" name="det_leido" class="form-control form-control-sm" style="text-transform: uppercase;" value="2" readonly>
                         </div>
                     </div>
                 </div>

@@ -17,5 +17,18 @@
 		echo $result=mysqli_query($conexion,$sql);
 		mysqli_close($conexion);
 
+	}elseif (isset($_POST['resp_id'])) {
+
+		$det_id = $_POST['resp_id'];
+		$sql="UPDATE hoja_detalle SET det_leido = 3 WHERE det_id = '$det_id'";
+		echo $result=mysqli_query($conexion,$sql);
+		mysqli_close($conexion);
+
+	}elseif (isset($_POST['resp_fin'])) {
+		
+		$det_id = $_POST['resp_fin'];
+		$sql="UPDATE hoja_detalle SET det_leido = 4 WHERE det_id = '$det_id'";
+		echo $result=mysqli_query($conexion,$sql);
+		mysqli_close($conexion);
 	}
  ?>

@@ -14,28 +14,39 @@
             <?php
                 $sql = "SELECT `det_id`,`hoja_numero_tramite`, `hoja_tipo_proceso`, hoja_area_proceso,`det_etapa`,`det_accion`,`det_observacion`, det_leido 
                         FROM hoja_detalle JOIN hoja 
-                        WHERE hoja_detalle.hoja_id = hoja.hoja_id AND det_estado = 'EJECUCION' AND det_fin >= NOW() AND det_audiencia = '0000-00-00 00:00:00' AND det_encargado = '".$_SESSION['adm_id']."' ORDER BY det_fin ASC;";
+                        WHERE hoja_detalle.hoja_id = hoja.hoja_id AND ((det_estado = 'EJECUCION' AND det_fin >= NOW() AND det_audiencia = '0000-00-00 00:00:00' AND det_encargado = '".$_SESSION['adm_id']."') OR (det_estado = 'FINALIZADO' AND det_audiencia = '0000-00-00 00:00:00' AND det_leido = '2' AND enc_reg = '".$_SESSION['adm_id']."') OR (det_estado = 'FINALIZADO' AND det_audiencia = '0000-00-00 00:00:00' AND det_leido = '3' AND enc_reg = '".$_SESSION['adm_id']."'))
+                             ORDER BY det_fin ASC;";
                 $resultado = mysqli_query($conexion, $sql);
                 while ($registro = mysqli_fetch_assoc($resultado))
                 {
                 ?>
                     <tr>
                         <td hidden><?php echo $registro["det_id"]; ?></td>
-                        <td><?php echo $registro["hoja_numero_tramite"]; ?></td>
-                        <td><?php echo $registro["hoja_tipo_proceso"]; ?></td>
-                        <td><?php echo $registro["hoja_area_proceso"]; ?></td>
-                        <td>
+                        <td width="80px"><?php echo $registro["hoja_numero_tramite"]; ?></td>
+                        <td width="100px"><?php echo $registro["det_accion"]; ?></td>
+                        <td width="70px"><?php echo $registro["hoja_area_proceso"]; ?></td>
+                        <td width="100px">
                             <?php echo $registro['det_observacion']; ?>
                         </td>
-                        <td style="text-align: center;">
+                        <td width="50px" style="text-align: center;">
                         <?php 
                             if ($registro['det_leido'] == '0') { ?>
                                 <a style="color:black;" href="javascript:void(0);" class='btnVerEventoHojaFinalizado btnUpdateLeido' title="Ver Accion">
                                     <i style="color: #E67E22; --darkreader-inline-color:#230443; font-size:20px;" class="fas fa-envelope"></i>
                                 </a>
                             <?php
-                            }else { ?>
+                            }elseif ($registro['det_leido'] == '1') { ?>
                                 <a style="color:black;" href="javascript:void(0);" class='btnVerEventoHojaFinalizado' title="Visto">
+                                    <i style="color: #E67E22; --darkreader-inline-color:#230443; font-size:20px;" class="fas fa-envelope-open-text"></i>
+                                </a>
+                            <?php
+                            }elseif ($registro['det_leido'] == '2'){ ?>
+                                <a style="color:black;" href="javascript:void(0);" class='btnVerRespuesta btnRespLeido' title="Ver Respuesta">
+                                    <i style="color: #E67E22; --darkreader-inline-color:#230443; font-size:20px;" class="fas fa-envelope"></i>
+                                </a>
+                            <?php
+                            }else{ ?>
+                                <a style="color:black;" href="javascript:void(0);" class='btnVerRespuesta' title="Visto">
                                     <i style="color: #E67E22; --darkreader-inline-color:#230443; font-size:20px;" class="fas fa-envelope-open-text"></i>
                                 </a>
                             <?php

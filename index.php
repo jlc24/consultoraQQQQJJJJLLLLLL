@@ -628,12 +628,12 @@ $row = $resultado->fetch_assoc();
                                             </div>
                                             <div class="wigdet-two-content media-body col-xl-2" style="padding-top: 2px;">
                                                 <span>
-                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="collapse" data-target="#juridico">Ver</button>
+                                                    <button type="button" class="btn btn-info btn-sm" >Ver</button>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="juridico" class="row collapse in">
+                                    <div class="row ">
                                         <div class="col-xl-6 col-sm-16">
                                             <div class="card-box widget-box-two widget-two-custom " style="height: 300px;">
                                                 <div class="media">
@@ -1269,18 +1269,20 @@ $row = $resultado->fetch_assoc();
                     <!-- end row -->
                     
                     
-                    <div id="modal_ver_hoja_detalle" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-md">
+                    <div id="modal_respuesta_hoja_detalle" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h4 class="modal-title" id="myModalLabel">Ver Accion de Hoja de Ruta</h4>
+                                    <h4 class="modal-title" id="myModalLabel">Respuesta Accion de Hoja de Ruta</h4>
                                 </div>
-                                <div class="modal-body" id="ver_hoja_detalle">
+                                <div class="modal-body" id="respuesta_hoja_detalle">
                                     
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" id="update_respuesta_accion_fin" class="btn btn-success waves-effect">Finalizar Evento</button>
                                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" id="update_respuesta_accion" class="btn btn-purple waves-effect" disabled>Reenviar Accion</button>
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
@@ -1394,471 +1396,607 @@ $row = $resultado->fetch_assoc();
     <!-- end Libs -->
     <!-- INICIALIZAMOS EL PLUGIN Datatables EN LA TABLA CON id=factura-->
     <script type="text/javascript">
-            $(document).ready(function() {
-            // 1. CARGAMOS LA TABLA DE CLIENTES
-                $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
-                $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
-                $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
-                $('#alarma_viewmensajes_topbar').load('alarma/alarma_viewmensajes_topbar.php');
-                $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
-                $('#alarma_audiencia').load('alarma/alarma_audiencia.php');
-                $('#alarma_tincumplidas').load('alarma/alarma_tincumplidas.php');
-                $('#audiencia_table').load('tabla_audiencias.php');
-                $('#notificaciones_table').load('tabla_notificaciones.php');
-                $('#tincumplidas_table').load('tabla_tincumplidas.php');
-                $('#tabla_all_tareas').load('tabla_all_tareas.php');
-                $('#tabla_tincumplida').load('tabla_tareas_incumplidas.php');
-            });
-
-            $("#destino_mensaje_blanco").autocomplete({
-                appendTo: '#modal_mensaje_blanco',
-                source: function(request, response) {
-                    $.ajax({
-                        url: "autocomplete_nombre_administrador.php",
-                        type: "post",
-                        dataType: "json",
-                        data: {
-                            search: request.term
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 1,
-                select: function(event, ui) {
-                    event.preventDefault();
-                    $('#enc_id_blanco').val(ui.item.id);
-                    $('#destino_mensaje_blanco').val(ui.item.nombre);
-                    return false;
-                }
-            });
-
-            $(document).on("click", ".btnEditarEventoHojaPendiente", function() {
-                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
+        $(document).ready(function() {
+        // 1. CARGAMOS LA TABLA DE CLIENTES
+            $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
+            $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+            $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
+            $('#alarma_viewmensajes_topbar').load('alarma/alarma_viewmensajes_topbar.php');
+            $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
+            $('#alarma_audiencia').load('alarma/alarma_audiencia.php');
+            $('#alarma_tincumplidas').load('alarma/alarma_tincumplidas.php');
+            $('#audiencia_table').load('tabla_audiencias.php');
+            $('#notificaciones_table').load('tabla_notificaciones.php');
+            $('#tincumplidas_table').load('tabla_tincumplidas.php');
+            $('#tabla_all_tareas').load('tabla_all_tareas.php');
+            $('#tabla_tincumplida').load('tabla_tareas_incumplidas.php');
+        });
+        $("#destino_mensaje_blanco").autocomplete({
+            appendTo: '#modal_mensaje_blanco',
+            source: function(request, response) {
                 $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_hoja_id.php",
-                    data: cadena,
-                    success: function(r) {
-                            if(r) {
-                                $('#finalizar_hoja_detalle').load('modal_finalizar_evento_hoja.php');
-                                $('#modal_finalizar_hoja_detalle').modal('show');
-                            }
-                        }
-                });
-            });
-            
-            function verif(detalle) {
-                if (detalle == "registro") {
-                    var audiencia = document.getElementById("detalle_audiencia").value;
-                    var juzgado = document.getElementById("detalle_juzgado").value;
-                    var obs = document.getElementById("det_observacion").value;
-                    var encargado = document.getElementById("responsable_area").value;
-                    if (juzgado != "" && obs != "" && encargado != "") {
-                        document.getElementById("update_audiencia_hoja").disabled = false;
-                    }else{
-                        document.getElementById("update_audiencia_hoja").disabled = true;
+                    url: "autocomplete_nombre_administrador.php",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        search: request.term
+                    },
+                    success: function(data) {
+                        response(data);
                     }
-                }else if (detalle == "fin"){
-                    var obs = $("#det_respuesta").val();
-                    if (obs != "" ) {
-                        document.getElementById("update_file_hoja").disabled = false;
-                    }else{
-                        document.getElementById("update_file_hoja").disabled = true;
+                });
+            },
+            minLength: 1,
+            select: function(event, ui) {
+                event.preventDefault();
+                $('#enc_id_blanco').val(ui.item.id);
+                $('#destino_mensaje_blanco').val(ui.item.nombre);
+                return false;
+            }
+        });
+        $(document).on("click", ".btnMensaje", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#contenido_mensaje').load('modal_message.php');
+                        $('#modal_mensaje').modal('show');
+                        $('#modal_mensaje').on('shown.bs.modal',function(){
+                            $('#desc_mensaje').trigger('focus');
+                        });
                     }
                 }
-            }
-
-            function showError(cadena){
-                var dato = $('#'+cadena+'').val();
-                if (dato != '') {
-                    document.getElementById("error_"+cadena+"").style.display = "none";
-                }else{
-                    document.getElementById("error_"+cadena+"").style.display = "";
-                }
-            }
-
-            $(document).ready(function(){
-                $("#update_file_hoja").click(function(){
-                    cadena = "hoja_id="+$("#hoja_id").val();
-                    tramite = $("#hoja_numero_tramite_update").val();
-                    audi_sw = $("#audi_switch").val();
-                    //alert(audi_sw); return false;
-                    
-                    var file_data = $("#newFile").prop("files")[0];
-                    var datos = new FormData();
-                    
-                    datos.append("newFile", file_data);
-                    datos.append("detalle_id", $("#detalle_id").val());
-                    datos.append("admin_eve", $("#admin_eve").val());
-                    datos.append("identificador", $("#identificador").val());
-                    datos.append("det_respuesta", $("#det_respuesta").val());
-                    datos.append("det_estado_update", $("#det_estado_update").val());
-                    
-                    //console.log(datos); 
-                    //alert(datos); return false;
-                    $.ajax({
-                        cache: false,
-                        contentType: false,
-                        data: datos,
-                        dataType: 'JSON',
-                        enctype: 'multipart/form-data',
-                        processData: false,
-                        method: "POST",
-                        url: "assets/inc/upload_file.php",
-                        success:function(response){
-                            if(response){
-                                if (audi_sw != "0000-00-00 00:00:00") {
-                                    Swal.fire({
-                                        type: 'success',
-                                        title: '¿Desea fijar otra fecha de Audiencia para la hoja de ruta ',
-                                        text: tramite+"?",
-                                        showCancelButton: true,
-                                        cancelButtonText: 'No',
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Si'
-                                    }).then((result) => {
-                                        if(result.value) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "assets/inc/update_hoja_id.php",
-                                                data: cadena,
-                                                success: function(r) {
-                                                    if(r) {
-                                                        $('#audiencia_table').load('tabla_audiencias.php');
-                                                        $('#modal_finalizar_hoja_detalle').modal('hide');
-                                                        $('#fecha_audiencia').load('modal_create_audiencia.php');
-                                                        $('#modal_hoja_detalle_audiencia').modal('show');
-                                                    }
-                                                }
-                                            });
-                                        }else{
-                                            $('#audiencia_table').load('tabla_audiencias.php');
-                                            $('#modal_finalizar_hoja_detalle').modal('hide');
-                                            Swal.fire({
-                                                type: 'success',
-                                                title: 'Audiencia finalizada.',
-                                                showConfirmButton: false,
-                                                timer: 2000
-                                            })
-                                        }
-                                    })
-                                }else{
-                                    Swal.fire({
-                                        type: 'success',
-                                        title: '¿Desea fijar otro evento para la hoja de ruta ',
-                                        text: tramite+"?",
-                                        showCancelButton: true,
-                                        cancelButtonText: 'No',
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Si'
-                                    }).then((result) => {
-                                        if(result.value) {
-                                            $.ajax({
-                                                type: "POST",
-                                                url: "assets/inc/update_hoja_id.php",
-                                                data: cadena,
-                                                success: function(r) {
-                                                    if(r) {
-                                                        $('#notificaciones_table').load('tabla_notificaciones.php');
-                                                        $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
-                                                        $('#modal_finalizar_hoja_detalle').modal('hide');
-                                                        $('#evento_hoja').load('modal_create_evento_hoja.php');
-                                                        $('#modal_crear_evento_hoja').modal('show');
-                                                    }
-                                                }
-                                            });
-                                        }else{
-                                            $('#notificaciones_table').load('tabla_notificaciones.php');
-                                            $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
-                                            $('#modal_finalizar_hoja_detalle').modal('hide');
-                                            Swal.fire({
-                                                type: 'success',
-                                                title: 'Evento finalizado.',
-                                                showConfirmButton: false,
-                                                timer: 2000
-                                            })
-                                        }
-                                    })
-                                }
-
-                            }else{
-                                Swal.fire({
-                                    type: 'error',
-                                    title: 'Se ha Producido un Error.',
-                                    showConfirmButton: false,
-                                    timer: 2000
-                                })
-                            }
-                        }
-                    });
-                });
             });
-            $(document).on("click", ".btnVerEventoHojaFinalizado", function() {
-                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_hoja_id.php",
-                    data: cadena,
-                    success: function(r) {
+        });
+        $(document).on("click", "#enviar_mensaje_blanco", function() {
+            cadena = $("#formulario_mensaje_blanco").serialize();
+            //alert(cadena); return false;
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/create_message.php",
+                data: cadena,
+                success: function(response) {
+                    if(response == 1) {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Envio de mensaje exitoso.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
+                        $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
+                        $('#modal_mensaje_blanco').on('hidden.bs.modal', function() {
+                            $(this).find('#formulario_mensaje_blanco')[0].reset();
+                        });
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Se ha Producido un Error.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                }
+            });
+        });
+        $(document).on("click", ".btnMensajeLeido", function() {
+            cadena = "not_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_detalle_leido.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#tincumplidas_table').load('tabla_tincumplidas.php');
+                        $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
+                        $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
+                        $('#alarma_viewmensajes_topbar').load('alarma/alarma_viewmensajes_topbar.php');
+                    }
+                }
+            });
+        });
+        $(document).on("click", ".btnVerMensaje", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#ver_mensaje').load('modal_message_show.php');
+                        $('#modal_ver_mensaje').modal('show');
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", "#enviar_mensaje", function() {
+            cadena = $("#formulario_mensaje").serialize();
+            //alert(cadena); return false;
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/create_message.php",
+                data: cadena,
+                success: function(response) {
+                    if(response == 1) {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Envio de mensaje exitoso.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
+                        $('#tincumplidas_table').load('tabla_tincumplidas.php');
+                        $('#modal_mensaje').on('hidden.bs.modal', function() {
+                            $(this).find('#formulario_mensaje')[0].reset();
+                        });
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Se ha Producido un Error.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", ".btnEditarEventoHojaPendiente", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
                         if(r) {
-                            $("#formulario_actualizar_hoja_detalle").trigger("reset");
-                            document.getElementById("update_file_hoja").disabled = true;
                             $('#finalizar_hoja_detalle').load('modal_finalizar_evento_hoja.php');
                             $('#modal_finalizar_hoja_detalle').modal('show');
-                            $('#modal_finalizar_hoja_detalle').on('shown.bs.modal',function(){
-                                $('#det_respuesta').trigger('focus');
-                            });
                         }
                     }
-                });
             });
-            $(document).on("click", ".btnUpdateLeido", function() {
-                cadena = "det_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_detalle_leido.php",
-                    data: cadena,
-                    success: function(r) {
-                        if(r) {
-                            $('#notificaciones_table').load('tabla_notificaciones.php');
-                            $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
-                            $('#tincumplidas_table').load('tabla_tincumplidas.php');
-                        }
-                    }
-                });
-            });
-            $(document).on("click", ".btnMensaje", function() {
-                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_hoja_id.php",
-                    data: cadena,
-                    success: function(r) {
-                        if(r) {
-                            $('#contenido_mensaje').load('modal_message.php');
-                            $('#modal_mensaje').modal('show');
-                            $('#modal_mensaje').on('shown.bs.modal',function(){
-                                $('#desc_mensaje').trigger('focus');
-                            });
-                        }
-                    }
-                });
-            });
-            $(document).on("click", "#enviar_mensaje", function() {
-                cadena = $("#formulario_mensaje").serialize();
-                //alert(cadena); return false;
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/create_message.php",
-                    data: cadena,
-                    success: function(response) {
-                        if(response == 1) {
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Envio de mensaje exitoso.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                            $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
-                            $('#tincumplidas_table').load('tabla_tincumplidas.php');
-                            $('#modal_mensaje').on('hidden.bs.modal', function() {
-                                $(this).find('#formulario_mensaje')[0].reset();
-                            });
-                        } else {
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Se ha Producido un Error.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        }
-                    }
-                });
-            });
-            $(document).on("click", "#enviar_mensaje_blanco", function() {
-                cadena = $("#formulario_mensaje_blanco").serialize();
-                //alert(cadena); return false;
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/create_message.php",
-                    data: cadena,
-                    success: function(response) {
-                        if(response == 1) {
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Envio de mensaje exitoso.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                            $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
-                            $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
-                            $('#modal_mensaje_blanco').on('hidden.bs.modal', function() {
-                                $(this).find('#formulario_mensaje_blanco')[0].reset();
-                            });
-                        } else {
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Se ha Producido un Error.',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                        }
-                    }
-                });
-            });
-            $(document).on("click", ".btnMensajeLeido", function() {
-                cadena = "not_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_detalle_leido.php",
-                    data: cadena,
-                    success: function(r) {
-                        if(r) {
-                            $('#tincumplidas_table').load('tabla_tincumplidas.php');
-                            $('#alarma_newmensajes_topbar').load('alarma/alarma_newmensajes_topbar.php');
-                            $('#alarma_sendmensajes_topbar').load('alarma/alarma_sendmensajes_topbar.php');
-                            $('#alarma_viewmensajes_topbar').load('alarma/alarma_viewmensajes_topbar.php');
-                        }
-                    }
-                });
-            });
-            $(document).on("click", ".btnVerMensaje", function() {
-                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
-                //alert(cadena); return false;
-                //https://jsonformatter.org/jsbeautifier
-                $.ajax({
-                    type: "POST",
-                    url: "assets/inc/update_hoja_id.php",
-                    data: cadena,
-                    success: function(r) {
-                        if(r) {
-                            $('#ver_mensaje').load('modal_message_show.php');
-                            $('#modal_ver_mensaje').modal('show');
-                        }
-                    }
-                });
-            });
-            function showInp(){
-                var accion = document.getElementById("detalle_accion").value;
-                if(accion == "AUDIENCIA"){
-                    document.getElementById("audiencia").style.display = "";
-                    document.getElementById("juzgado").style.display = "";
-                    document.getElementById("respuesta").style.display = "none";
-                    document.getElementById("error_accion").style.display = "none";
-                    document.getElementById("field_file").style.display = "none";
-                    document.getElementById("field_f").style.display = "none";
-                    document.getElementById("det_obs").style.display = "";
-                    document.getElementById("resp_area").style.display = "";
-                }else if(accion=="") {
-                    document.getElementById("error_accion").style.display = "";
-                    document.getElementById("respuesta").style.display = "";
-                    document.getElementById("audiencia").style.display = "none";
-                    document.getElementById("create_evento_hoja").disabled = true;
-                }else {
-                    document.getElementById("audiencia").style.display = "none";
-                    document.getElementById("juzgado").style.display = "none";
-                    document.getElementById("respuesta").style.display = "";
-                    document.getElementById("error_accion").style.display = "none";
-                    document.getElementById("field_file").style.display = "";
-                    document.getElementById("field_f").style.display = "";
-                    document.getElementById("det_obs").style.display = "";
-                    document.getElementById("resp_area").style.display = "";
-                }
-            }
-            function verificar() {
-                var etapa = document.getElementById("detalle_etapa").value;
-                var accion = document.getElementById("detalle_accion").value;
-                var detfin = document.getElementById("detalle_fecha_fin").value;
+        });
+        
+        function verif(detalle) {
+            if (detalle == "registro") {
                 var audiencia = document.getElementById("detalle_audiencia").value;
                 var juzgado = document.getElementById("detalle_juzgado").value;
-                var obs = document.getElementById("detalle_observacion").value;
+                var obs = document.getElementById("det_observacion").value;
                 var encargado = document.getElementById("responsable_area").value;
-                if (etapa != "") {
-                    if (accion == "AUDIENCIA") {
-                        if (detfin != "0000-00-00 00:00:00" && juzgado != "" && obs != "" && encargado != "") {
-                            document.getElementById("create_evento_hoja").disabled = false;
-                        }else{
-                            document.getElementById("create_evento_hoja").disabled = true;
-                        }
-                    }else if (detfin != "0000-00-00 00:00:00" && obs != "" && encargado != "") {
-                        document.getElementById("create_evento_hoja").disabled = false;
-                    }else{
-                        document.getElementById("create_evento_hoja").disabled = true;
-                    }
+                if (juzgado != "" && obs != "" && encargado != "") {
+                    document.getElementById("update_audiencia_hoja").disabled = false;
                 }else{
-                    document.getElementById("create_evento_hoja").disabled = true;
+                    document.getElementById("update_audiencia_hoja").disabled = true;
+                }
+            }else if (detalle == "fin"){
+                var obs = $("#det_respuesta").val();
+                if (obs != "" ) {
+                    document.getElementById("update_file_hoja").disabled = false;
+                }else{
+                    document.getElementById("update_file_hoja").disabled = true;
+                }
+            }else if (detalle == "reenvio"){
+                var obs = $("#det_respuesta_fin").val();
+                var fecfin = $("#detalle_resp_fin").val();
+                //alert(fecfin); return false;
+                if (obs != "" && fecfin != "") {
+                    document.getElementById("update_respuesta_accion").disabled = false;
+                }else{
+                    document.getElementById("update_respuesta_accion").disabled = true;
                 }
             }
-            $('#create_evento_hoja').click(function(){
-                var file_data = $("#uploadFile").prop("files")[0];
-                var datos = new FormData();
-                datos.append("uploadFile", file_data);
-                datos.append("hoja_id", $("#hoja_id").val());
-                datos.append("admin", $("#admin").val());
-                datos.append("hoja_numero_tramite", $("#hoja_numero_tramite").val());
-                datos.append("nombre_update_cliente", $("#nombre_update_cliente").val());
-                datos.append("detalle_etapa", $("#detalle_etapa").val());
-                datos.append("detalle_accion", $("#detalle_accion").val());
-                datos.append("detalle_inicio", $("#detalle_inicio").val());
-                datos.append("detalle_fecha_fin", $("#detalle_fecha_fin").val());
-                datos.append("detalle_audiencia", $("#detalle_audiencia").val());
-                datos.append("detalle_juzgado", $("#detalle_juzgado").val());
-                datos.append("lugar_juzgado", $("#lugar_juzgado").val());
-                datos.append("detalle_estado", $("#detalle_estado").val());
-                datos.append("detalle_observacion", $("#detalle_observacion").val());
-                datos.append("responsable_area", $("#responsable_area").val());
-                for (var value of datos.values()) {
-                    console.log(value);
-                }
+        }
 
+        function showError(cadena){
+            var dato = $('#'+cadena+'').val();
+            if (dato != '') {
+                document.getElementById("error_"+cadena+"").style.display = "none";
+            }else{
+                document.getElementById("error_"+cadena+"").style.display = "";
+            }
+        }
+
+        $(document).ready(function(){
+            $("#update_file_hoja").click(function(){
+                cadena = "hoja_id="+$("#hoja_id").val();
+                tramite = $("#hoja_numero_tramite_update").val();
+                audi_sw = $("#audi_switch").val();
+                //alert(audi_sw); return false;
+                
+                var file_data = $("#newFile").prop("files")[0];
+                var datos = new FormData();
+                
+                datos.append("newFile", file_data);
+                datos.append("detalle_id", $("#detalle_id").val());
+                datos.append("admin_eve", $("#admin_eve").val());
+                datos.append("det_respuesta", $("#det_respuesta").val());
+                datos.append("det_leido", $("#det_leido").val());
+                datos.append("det_estado_update", $("#det_estado_update").val());
+                
+                //console.log(datos); 
                 //alert(datos); return false;
                 $.ajax({
-                    cahe: false,
+                    cache: false,
                     contentType: false,
                     data: datos,
                     dataType: 'JSON',
                     enctype: 'multipart/form-data',
                     processData: false,
-                    method:"POST",
-                    url:"assets/inc/create_evento_hoja.php",
+                    method: "POST",
+                    url: "assets/inc/upload_file.php",
                     success:function(response){
                         if(response){
-                            Swal.fire({
-                                type: 'success',
-                                title: 'Registro de Evento Exitoso',
-                                showConfirmButton: false,
-                                timer: 2000
-                            })
-                            $('#audiencia_table').load('tabla_audiencias.php');
-                            $('#notificaciones_table').load('tabla_notificaciones.php');
-                            $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
-                            $('#formulario_crear_evento_hoja').trigger("reset");
+                            if (audi_sw != "0000-00-00 00:00:00") {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: '¿Desea fijar otra fecha de Audiencia para la hoja de ruta ',
+                                    text: tramite+"?",
+                                    showCancelButton: true,
+                                    cancelButtonText: 'No',
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Si'
+                                }).then((result) => {
+                                    if(result.value) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "assets/inc/update_hoja_id.php",
+                                            data: cadena,
+                                            success: function(r) {
+                                                if(r) {
+                                                    $('#audiencia_table').load('tabla_audiencias.php');
+                                                    $('#modal_finalizar_hoja_detalle').modal('hide');
+                                                    $('#fecha_audiencia').load('modal_create_audiencia.php');
+                                                    $('#modal_hoja_detalle_audiencia').modal('show');
+                                                }
+                                            }
+                                        });
+                                    }else{
+                                        $('#audiencia_table').load('tabla_audiencias.php');
+                                        $('#modal_finalizar_hoja_detalle').modal('hide');
+                                        Swal.fire({
+                                            type: 'success',
+                                            title: 'Audiencia finalizada.',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        })
+                                    }
+                                })
+                            }else{
+                                $('#notificaciones_table').load('tabla_notificaciones.php');
+                                $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                                $('#modal_finalizar_hoja_detalle').modal('hide');
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Evento finalizado.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            }
+
                         }else{
                             Swal.fire({
                                 type: 'error',
                                 title: 'Se ha Producido un Error.',
                                 showConfirmButton: false,
-                                timer: 2000//1500
+                                timer: 2000
                             })
                         }
                     }
                 });
             });
+        });
+        $(document).on("click", ".btnVerEventoHojaFinalizado", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $("#formulario_actualizar_hoja_detalle").trigger("reset");
+                        document.getElementById("update_file_hoja").disabled = true;
+                        $('#finalizar_hoja_detalle').load('modal_finalizar_evento_hoja.php');
+                        $('#modal_finalizar_hoja_detalle').modal('show');
+                        $('#modal_finalizar_hoja_detalle').on('shown.bs.modal',function(){
+                            $('#det_respuesta').trigger('focus');
+                        });
+                    }
+                }
+            });
+        });
+        $(document).on("click", ".btnUpdateLeido", function() {
+            cadena = "det_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_detalle_leido.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#notificaciones_table').load('tabla_notificaciones.php');
+                        $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
+                        $('#tincumplidas_table').load('tabla_tincumplidas.php');
+                    }
+                }
+            });
+        });
 
+        function showInp(){
+            var accion = document.getElementById("detalle_accion").value;
+            if(accion == "AUDIENCIA"){
+                document.getElementById("audiencia").style.display = "";
+                document.getElementById("juzgado").style.display = "";
+                document.getElementById("respuesta").style.display = "none";
+                document.getElementById("error_accion").style.display = "none";
+                document.getElementById("field_file").style.display = "none";
+                document.getElementById("field_f").style.display = "none";
+                document.getElementById("det_obs").style.display = "";
+                document.getElementById("resp_area").style.display = "";
+            }else if(accion=="") {
+                document.getElementById("error_accion").style.display = "";
+                document.getElementById("respuesta").style.display = "";
+                document.getElementById("audiencia").style.display = "none";
+                document.getElementById("create_evento_hoja").disabled = true;
+            }else {
+                document.getElementById("audiencia").style.display = "none";
+                document.getElementById("juzgado").style.display = "none";
+                document.getElementById("respuesta").style.display = "";
+                document.getElementById("error_accion").style.display = "none";
+                document.getElementById("field_file").style.display = "";
+                document.getElementById("field_f").style.display = "";
+                document.getElementById("det_obs").style.display = "";
+                document.getElementById("resp_area").style.display = "";
+            }
+        }
+        function verificar() {
+            var etapa = document.getElementById("detalle_etapa").value;
+            var accion = document.getElementById("detalle_accion").value;
+            var detfin = document.getElementById("detalle_fecha_fin").value;
+            var audiencia = document.getElementById("detalle_audiencia").value;
+            var juzgado = document.getElementById("detalle_juzgado").value;
+            var obs = document.getElementById("detalle_observacion").value;
+            var encargado = document.getElementById("responsable_area").value;
+            if (etapa != "") {
+                if (accion == "AUDIENCIA") {
+                    if (detfin != "0000-00-00 00:00:00" && juzgado != "" && obs != "" && encargado != "") {
+                        document.getElementById("create_evento_hoja").disabled = false;
+                    }else{
+                        document.getElementById("create_evento_hoja").disabled = true;
+                    }
+                }else if (detfin != "0000-00-00 00:00:00" && obs != "" && encargado != "") {
+                    document.getElementById("create_evento_hoja").disabled = false;
+                }else{
+                    document.getElementById("create_evento_hoja").disabled = true;
+                }
+            }else{
+                document.getElementById("create_evento_hoja").disabled = true;
+            }
+        }
+        $('#create_evento_hoja').click(function(){
+            var file_data = $("#uploadFile").prop("files")[0];
+            var datos = new FormData();
+            datos.append("uploadFile", file_data);
+            datos.append("hoja_id", $("#hoja_id").val());
+            datos.append("admin", $("#admin").val());
+            datos.append("hoja_numero_tramite", $("#hoja_numero_tramite").val());
+            datos.append("nombre_update_cliente", $("#nombre_update_cliente").val());
+            datos.append("detalle_etapa", $("#detalle_etapa").val());
+            datos.append("detalle_accion", $("#detalle_accion").val());
+            datos.append("detalle_inicio", $("#detalle_inicio").val());
+            datos.append("detalle_fecha_fin", $("#detalle_fecha_fin").val());
+            datos.append("detalle_audiencia", $("#detalle_audiencia").val());
+            datos.append("detalle_juzgado", $("#detalle_juzgado").val());
+            datos.append("lugar_juzgado", $("#lugar_juzgado").val());
+            datos.append("detalle_estado", $("#detalle_estado").val());
+            datos.append("detalle_observacion", $("#detalle_observacion").val());
+            datos.append("responsable_area", $("#responsable_area").val());
+            for (var value of datos.values()) {
+                console.log(value);
+            }
+
+            //alert(datos); return false;
+            $.ajax({
+                cahe: false,
+                contentType: false,
+                data: datos,
+                dataType: 'JSON',
+                enctype: 'multipart/form-data',
+                processData: false,
+                method:"POST",
+                url:"assets/inc/create_evento_hoja.php",
+                success:function(response){
+                    if(response){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Registro de Evento Exitoso',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        $('#audiencia_table').load('tabla_audiencias.php');
+                        $('#notificaciones_table').load('tabla_notificaciones.php');
+                        $('#alarma_notificaciones').load('alarma/alarma_notificaciones.php');
+                        $('#formulario_crear_evento_hoja').trigger("reset");
+                    }else{
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Se ha Producido un Error.',
+                            showConfirmButton: false,
+                            timer: 2000//1500
+                        })
+                    }
+                }
+            });
+        });
+        $(document).on("click", ".btnRespLeido", function() {
+            cadena = "resp_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_detalle_leido.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#notificaciones_table').load('tabla_notificaciones.php');
+                    }
+                }
+            });
+        });
+        $(document).on("click", ".btnVerRespuesta", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#respuesta_hoja_detalle').load('modal_respuesta_evento_hoja.php');
+                        $('#modal_respuesta_hoja_detalle').modal('show');
+                    }
+                }
+            });
+        });
+        $(document).on("click", "#update_respuesta_accion_fin", function() {
+            cadena = "resp_fin="+$("#detalle_id_fin").val();
+            hoja = "hoja_id="+$("#hoja_id").val();
+            tramite = $("#hoja_numero_tramite_fin").val();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            Swal.fire({
+                type: 'warning',
+                title: '¿Desea finalizar la accion de '+tramite+'?',
+                text: "",
+                showCancelButton: true,
+                cancelButtonText: 'No',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if(result.value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "assets/inc/update_detalle_leido.php",
+                        data: cadena,
+                        success: function(r) {
+                            if(r) {
+                                Swal.fire({
+                                type: 'success',
+                                title: '¿Desea fijar otro evento para la hoja de ruta ',
+                                text: tramite+"?",
+                                showCancelButton: true,
+                                cancelButtonText: 'No',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Si'
+                                }).then((result) => {
+                                    if(result.value) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "assets/inc/update_hoja_id.php",
+                                            data: hoja,
+                                            success: function(r) {
+                                                if(r) {
+                                                    $('#notificaciones_table').load('tabla_notificaciones.php');
+                                                    $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                                                    $('#modal_respuesta_hoja_detalle').modal('hide');
+                                                    $('#evento_hoja').load('modal_create_evento_hoja.php');
+                                                    $('#modal_crear_evento_hoja').modal('show');
+                                                }
+                                            }
+                                        });
+                                    }else{
+                                        $('#notificaciones_table').load('tabla_notificaciones.php');
+                                        $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                                        $('#modal_respuesta_hoja_detalle').modal('hide');
+                                        Swal.fire({
+                                            type: 'success',
+                                            title: 'Evento finalizado.',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        })
+                                    }
+                                })
+                            }else{
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Se ha Producido un Error.',
+                                    showConfirmButton: false,
+                                    timer: 2000//1500
+                                })
+                            }
+                        }
+                    });
+                }
+            })
+        });
+        $("#update_respuesta_accion").click(function(){
+            cadena = "hoja_id="+$("#hoja_id").val();
+            tramite = $("#hoja_numero_tramite_update").val();
+            //alert(audi_sw); return false;
+            
+            var file_data = $("#endFile").prop("files")[0];
+            var datos = new FormData();
+            
+            datos.append("newFile", file_data);
+            datos.append("detalle_id", $("#detalle_id_fin").val());
+            datos.append("admin_eve", $("#admin_eve_fin").val());
+            datos.append("det_respuesta", $("#det_respuesta_fin").val());
+            datos.append("det_fecha_fin", $("#detalle_resp_fin").val());
+            datos.append("det_leido", $("#det_leido_fin").val());
+            datos.append("det_estado_update", $("#det_estado_fin").val());
+            for (var value of datos.values()) {
+                console.log(value);
+            }
+            //console.log(datos); 
+            //alert(datos); return false;
+            $.ajax({
+                cache: false,
+                contentType: false,
+                data: datos,
+                dataType: 'JSON',
+                enctype: 'multipart/form-data',
+                processData: false,
+                method: "POST",
+                url: "assets/inc/upload_file.php",
+                success:function(response){
+                    if(response){
+                        $('#notificaciones_table').load('tabla_notificaciones.php');
+                        $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                        $('#modal_respuesta_hoja_detalle').modal('hide');
+                        Swal.fire({
+                            type: 'success',
+                            title: 'Tarea reenviada.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }else{
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Se ha Producido un Error.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                }
+            })
+        });
     </script>
 </body>
 </html>

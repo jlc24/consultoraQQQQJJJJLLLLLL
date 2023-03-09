@@ -48,11 +48,14 @@ include ('conexion.php');
 			$file = $_FILES['uploadFile']['name']; 
 			
 			$directorio = "../document/QJL/".$row['hoja_area_destino']."/".$row['hoja_area_proceso']."/".$row['hoja_numero_tramite']."/".$row['det_id'];
+
+			$numran1 = rand(0,1000);
+            $numran2 = rand(0,1000);
 			
 			$ruta_temp = $_FILES['uploadFile']['tmp_name']; 
 			
-			$rutafile = $directorio."/envio_".$file;
-			$ruta = "assets".substr($directorio,2) ."/envio_".$file;
+			$rutafile = $directorio."/envio_".$numran1."_".$numran2."_".$file;
+			$ruta = "assets".substr($directorio,2) ."/envio_".$numran1."_".$numran2."_".$file;
 			
 			if (!file_exists($directorio)) {
 				mkdir($directorio, 0777, true);

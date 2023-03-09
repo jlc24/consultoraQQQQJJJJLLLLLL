@@ -136,6 +136,25 @@ $row = $resultado->fetch_assoc();
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                                 
+                                <div id="modal_respuesta_hoja_detalle" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title" id="myModalLabel">Respuesta Accion de Hoja de Ruta</h4>
+                                            </div>
+                                            <div class="modal-body" id="respuesta_hoja_detalle">
+                                                
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" id="update_respuesta_accion_fin" class="btn btn-success waves-effect">Finalizar Evento</button>
+                                                <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Cerrar</button>
+                                                <button type="button" id="update_respuesta_accion" class="btn btn-purple waves-effect" disabled>Reenviar Accion</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
                                 <!--=================================================================================
                                 =   MODAL PARA VER EL DETALLE DE TODOS LOS EVENTOS REGISTRADOS DE UNA HOJA DE RUTA  =
                                 ==================================================================================-->
@@ -474,6 +493,9 @@ $row = $resultado->fetch_assoc();
                 $('#modal_crear_evento_hoja').on('shown.bs.modal', function() {
                     $('#detalle_etapa').focus();
                 });
+                $('#modal_respuesta_hoja_detalle').on('shown.bs.modal', function() {
+                    $('#det_respuesta_fin').focus();
+                });
                 //Imprimir Hoja de Ruta despues de Registrar Hoja
                 $(document).on("click", ".btnImprimirHoja", function() {
                     cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
@@ -803,6 +825,15 @@ $row = $resultado->fetch_assoc();
                     }else{
                         document.getElementById("update_file_hoja").disabled = true;
                     }
+                }else if (detalle == "reenvio"){
+                    var obs = $("#det_respuesta_fin").val();
+                    var fecfin = $("#detalle_resp_fin").val();
+                    //alert(fecfin); return false;
+                    if (obs != "" && fecfin != "") {
+                        document.getElementById("update_respuesta_accion").disabled = false;
+                    }else{
+                        document.getElementById("update_respuesta_accion").disabled = true;
+                    }
                 }
             }
             function showError(cadena){
@@ -828,6 +859,7 @@ $row = $resultado->fetch_assoc();
                 datos.append("admin_eve", $("#admin_eve").val());
                 datos.append("identificador", $("#identificador").val());
                 datos.append("det_respuesta", $("#det_respuesta").val());
+                datos.append("det_leido", $("#det_leido").val());
                 datos.append("det_estado_update", $("#det_estado_update").val());
                 
                 //console.log(datos); 
@@ -860,10 +892,7 @@ $row = $resultado->fetch_assoc();
                                     timer: 2000
                                 })
                                 $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
-                                $('#tabla_hoja_detalle').load('tabla_detalle_hoja.php');
-                                $('#modal_detalle_hoja').modal('show');
                             }
-
                         }else{
                             Swal.fire({
                                 type: 'error',
@@ -913,6 +942,179 @@ $row = $resultado->fetch_assoc();
                     document.getElementById("create_cliente").disabled = true;
                 }
             }
+            $(document).on("click", ".btnVerEventoHojaFinalizado", function() {
+                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                //alert(cadena); return false;
+                //https://jsonformatter.org/jsbeautifier
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_hoja_id.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $("#formulario_actualizar_hoja_detalle").trigger("reset");
+                            document.getElementById("update_file_hoja").disabled = true;
+                            $('#finalizar_hoja_detalle').load('modal_finalizar_evento_hoja.php');
+                            $('#modal_finalizar_hoja_detalle').modal('show');
+                            $('#modal_finalizar_hoja_detalle').on('shown.bs.modal',function(){
+                                $('#det_respuesta').trigger('focus');
+                            });
+                        }
+                    }
+                });
+            });
+            $(document).on("click", ".btnRespLeido", function() {
+                cadena = "resp_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                //alert(cadena); return false;
+                //https://jsonformatter.org/jsbeautifier
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_detalle_leido.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $('#notificaciones_table').load('tabla_notificaciones.php');
+                        }
+                    }
+                });
+            });
+            $(document).on("click", ".btnVerRespuesta", function() {
+                cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                //alert(cadena); return false;
+                //https://jsonformatter.org/jsbeautifier
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_hoja_id.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $('#respuesta_hoja_detalle').load('modal_respuesta_evento_hoja.php');
+                            $('#modal_respuesta_hoja_detalle').modal('show');
+                        }
+                    }
+                });
+            });
+            $(document).on("click", "#update_respuesta_accion_fin", function() {
+                cadena = "resp_fin="+$("#detalle_id_fin").val();
+                hoja = "hoja_id="+$("#hoja_id").val();
+                tramite = $("#hoja_numero_tramite_fin").val();
+                //alert(cadena); return false;
+                //https://jsonformatter.org/jsbeautifier
+                Swal.fire({
+                    type: 'warning',
+                    title: '¿Desea finalizar la accion de '+tramite+'?',
+                    text: "",
+                    showCancelButton: true,
+                    cancelButtonText: 'No',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si'
+                }).then((result) => {
+                    if(result.value) {
+                        $.ajax({
+                            type: "POST",
+                            url: "assets/inc/update_detalle_leido.php",
+                            data: cadena,
+                            success: function(r) {
+                                if(r) {
+                                    Swal.fire({
+                                    type: 'success',
+                                    title: '¿Desea fijar otro evento para la hoja de ruta ',
+                                    text: tramite+"?",
+                                    showCancelButton: true,
+                                    cancelButtonText: 'No',
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Si'
+                                    }).then((result) => {
+                                        if(result.value) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "assets/inc/update_hoja_id.php",
+                                                data: hoja,
+                                                success: function(r) {
+                                                    if(r) {
+                                                        $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                                                        $('#modal_respuesta_hoja_detalle').modal('hide');
+                                                        $('#evento_hoja').load('modal_create_evento_hoja.php');
+                                                        $('#modal_crear_evento_hoja').modal('show');
+                                                    }
+                                                }
+                                            });
+                                        }else{
+                                            $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                                            $('#modal_respuesta_hoja_detalle').modal('hide');
+                                            Swal.fire({
+                                                type: 'success',
+                                                title: 'Evento finalizado.',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                            })
+                                        }
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Se ha Producido un Error.',
+                                        showConfirmButton: false,
+                                        timer: 2000//1500
+                                    })
+                                }
+                            }
+                        });
+                    }
+                })
+            });
+            $("#update_respuesta_accion").click(function(){
+                cadena = "hoja_id="+$("#hoja_id").val();
+                tramite = $("#hoja_numero_tramite_update").val();
+                //alert(audi_sw); return false;
+                
+                var file_data = $("#endFile").prop("files")[0];
+                var datos = new FormData();
+                
+                datos.append("newFile", file_data);
+                datos.append("detalle_id", $("#detalle_id_fin").val());
+                datos.append("admin_eve", $("#admin_eve_fin").val());
+                datos.append("det_respuesta", $("#det_respuesta_fin").val());
+                datos.append("det_fecha_fin", $("#detalle_resp_fin").val());
+                datos.append("det_leido", $("#det_leido_fin").val());
+                datos.append("det_estado_update", $("#det_estado_fin").val());
+                for (var value of datos.values()) {
+                    console.log(value);
+                }
+                //console.log(datos); 
+                //alert(datos); return false;
+                $.ajax({
+                    cache: false,
+                    contentType: false,
+                    data: datos,
+                    dataType: 'JSON',
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    method: "POST",
+                    url: "assets/inc/upload_file.php",
+                    success:function(response){
+                        if(response){
+                            $('#alarma_notificaciones_topbar').load('alarma/alarma_notificaciones_topbar.php');
+                            $('#modal_respuesta_hoja_detalle').modal('hide');
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Tarea reenviada.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }else{
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                })
+            });
         </script>
     </body>
 </html>
