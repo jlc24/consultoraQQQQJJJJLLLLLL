@@ -20,7 +20,7 @@ if (isset($_POST['ingresar'])) {
         if ($row['adm_rol'] == 'admin') {
             header('Location: index.php');
         } else {
-            header('Location: tpv_ventas.php');
+            header('Location: index.php');
         }
 	} else {
 		echo "<script>

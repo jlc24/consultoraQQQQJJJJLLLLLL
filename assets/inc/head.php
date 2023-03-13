@@ -30,7 +30,7 @@
         
 
         
-
+        
         <!-- Funciones para el CRUD para la Farmacia -->
         <!--<script src="assets/js/crud/crud_venta.js"></script>
         <script src="assets/js/crud/crud_cliente.js"></script>

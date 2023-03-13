@@ -67,7 +67,7 @@
                                     class="form-control form-control-md" style="text-transform: uppercase;" 
                                     onkeyup="javascript:this.value=this.value.toUpperCase();" 
                                     value="<?php $fila = mysqli_fetch_row(mysqli_query($conexion,"SELECT COUNT(*) FROM hoja WHERE hoja_area_proceso = 'CIVIL';"));
-                                    $numero_hoja_ruta = (int)$fila[0]+1; echo 'QJC-'.$numero_hoja_ruta ?>">
+                                    $numero_hoja_ruta = (int)$fila[0]+1; echo 'QJC-'.$numero_hoja_ruta ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -79,7 +79,7 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">Fecha de Ingreso</label>
                                 <div class="col-md-8">
-                                    <input type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" id="hoja_fecha_ingreso" name="hoja_fecha_ingreso" class="form-control form-control-md" value="<?php echo Date('Y-m-d\TH:i',time()) ?>">
+                                    <input type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" id="hoja_fecha_ingreso" name="hoja_fecha_ingreso" class="form-control form-control-md" value="<?php echo Date('Y-m-d\TH:i',time()) ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -120,14 +120,14 @@
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">Área Destino</label>
                                 <div class="col-md-8">
-                                    <input type="text" id="hoja_area_destino" name="hoja_area_destino" class="form-control form-control-md" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                                    <input type="text" id="hoja_area_destino" name="hoja_area_destino" class="form-control form-control-md" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" value="JURIDICA" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-md-4 col-form-label">Responsable de área</label>
                                 <div class="col-md-8">
-                                    <input type="text" id="hoja_responsable_area" name="hoja_responsable_area" class="form-control form-control-md">
+                                    <input type="text" id="hoja_responsable_area" name="hoja_responsable_area" class="form-control form-control-md" value="DR. JORGE L. HERBAS HUAYLLAS" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">

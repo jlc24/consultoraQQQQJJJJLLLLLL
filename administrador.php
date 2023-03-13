@@ -7,7 +7,7 @@ if (!isset($_SESSION['adm_id'])) {
 }
 
 $adm_id = $_SESSION['adm_id'];
-$sql = "SELECT adm_id, adm_nombre FROM administrador WHERE adm_id = '$adm_id'";
+$sql = "SELECT adm_id, adm_nombre, adm_rol, area_id  FROM administrador WHERE adm_id = '$adm_id'";
 $resultado = $conexion->query($sql);
 $row = $resultado->fetch_assoc();
 ?>
@@ -42,18 +42,11 @@ $row = $resultado->fetch_assoc();
                             <div class="col-12">
                                 <div class="page-title-box">
                                     <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">QJL</a></li>
-                                            <li class="breadcrumb-item active">Administradores</li>
-                                        </ol>
                                     </div>
-                                    <h4 class="page-title">
-                                        <a style="color:purple;" href="#" data-toggle="modal" data-target="#modal_crear_administrador" title="Registrar Administrador">
-                                            <i class="far fa-plus-square"></i>
-                                        </a>Adm. Áreas Laborales
-                                    </h4>
+                                    <h4 class="page-title">Administración</h4>
                                 </div>
                             </div>
+                            
                         </div>
                         <!-- end page title -->
 
@@ -61,68 +54,183 @@ $row = $resultado->fetch_assoc();
                         =            Contenido Principal           =
                         =========================================-->
                         <div class="row">
-                            <div class="col-12">
-                                <!-- inicio tabla administrador -->
-                                <div class="card-box table-responsive" id="tabla_administrador">
-
+                            <div class="col-4">
+                                <div class="card-box py-2 text-center" id="card_area" name="card_area" style="border-style: solid; border-width: 1px; border-color: #fff;">
+                                    <input type="hidden" id="switch_area" value="0">
+                                    <div class="col-12">
+                                        <span><img src="assets/images/icon_png/distribucion.png" alt="" width="80px"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Administración de Áreas</h5>
+                                        <span>
+                                            <button type="button" id="btnArea" name="btnarea" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_area" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_area" style="transform: rotate(90deg);"></button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <!-- fin tabla administrador -->
-
-                                <?php include "modal_create_administrador.php"; ?>
-                                <?php /*include "modal_update_administrador.php";*/ ?>
-                                <div id="modal_actualizar_administrador" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Actualizar usuario Administrador</h4>
-                                            </div>
-                                            <div class="modal-body" id="actualizar_administrador">
-
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-
-                                <!--=================================================================================
-                                =   MODAL PARA VER LOS MENSAJES RECIBIDOS Y ENVIADOS ENTRE LOS ADMINISTRADORES  =
-                                ==================================================================================-->
-                                <div id="modal_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Mensaje Nuevo</h4>
-                                            </div>
-                                            <div class="modal-body" id="contenido_mensaje">
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" id="enviar_mensaje" class="btn btn-purple waves-effect" data-dismiss="modal">Enviar mensaje</button>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                                
-                                <?php include 'modal_message_blanck.php'; ?>
-
-                                <div id="modal_ver_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-md">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Mensaje</h4>
-                                            </div>
-                                            <div class="modal-body" id="ver_mensaje">
-
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-
                             </div>
-                            <!-- end col-12 -->
+                            <div class="col-4 ">
+                                <div class="card-box py-2 text-center" id="card_proceso" name="card_proceso" style="border-style: solid; border-width: 1px; border-color: #fff;">
+                                    <input type="hidden" id="switch_proceso" value="0">
+                                    <div class="col-12">
+                                        <span><img src="assets/images/icon_png/procesamiento.png" alt="" width="80px"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Administración de Procesos</h5>
+                                        <span>
+                                            <button type="button" id="btnProceso" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_proceso" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_proceso" style="transform: rotate(90deg);"></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 ">
+                                <div class="card-box py-2 text-center" id="card_personal" name="card_personal" style="border-style: solid; border-width: 1px; border-color: #fff;">
+                                    <input type="hidden" id="switch_personal" value="0">
+                                    <div class="col-12">
+                                        <span><img src="assets/images/icon_png/administracion.png" alt="" width="80px"></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Administración de Personal</h5>
+                                        <span>
+                                            <button type="button" id="btnPersonal" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_personal" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_personal" style="transform: rotate(90deg);"></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="col-10">
+                                <div id="adm_area" class="row collapse">
+                                    <div class="col-xl-12">
+                                        <div class="card-box" style="border-style: solid; border-width: 1px; border-color: #32C861;">
+                                            <div class="card-header" style="background-color: #E8F8ED; height: 50px; padding-top: 5px;">
+                                                <h4 class="page-title">
+                                                    <a style="color: #32C861;" href="#" data-toggle="modal" data-target="#modal_crear_area" title="Registrar Area">
+                                                        <i class="far fa-plus-square"></i>
+                                                    </a> Áreas
+                                                </h4>
+                                            </div>
+                                            <div class="card-body" id="tabla_area">
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div> <!--div Collapse -->
+                            </div>
+                            <div class="col-10">
+                                <div id="adm_proceso" class="row collapse in">
+                                    <div class="col-xl-12">
+                                        <div class="card-box" style="border-style: solid; border-width: 1px; border-color: #32C861;">
+                                            <div class="card-header" style="background-color: #E8F8ED; height: 50px; padding-top: 5px;">
+                                                <h4 class="page-title">
+                                                    <a style="color: #32C861;" href="#" data-toggle="modal" data-target="#modal_crear_proceso" title="Registrar Proceso">
+                                                        <i class="far fa-plus-square"></i>
+                                                    </a> Procesos
+                                                </h4>
+                                            </div>
+                                            <div class="card-body" id="tabla_proceso">
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div> <!--div Collapse -->
+                            </div>
+                            <div class="col-10">
+                                <div id="adm_personal" class="row collapse in">
+                                    <div class="col-xl-12">
+                                        <div class="card-box" style="border-style: solid; border-width: 1px; border-color: #32C861;">
+                                            <div class="card-header" style="background-color: #E8F8ED; height: 50px; padding-top: 5px;">
+                                                <h4 class="page-title">
+                                                    <a style="color: #32C861;" href="#" data-toggle="modal" data-target="#modal_crear_administrador" title="Registrar Administrador">
+                                                        <i class="far fa-plus-square"></i>
+                                                    </a> Personal
+                                                </h4>
+                                            </div>
+                                            <div class="card-body table-responsive" id="tabla_administrador">
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div> <!--div Collapse -->
+                            </div>
+
+                            <?php include "modal_create_administrador.php"; ?>
+                            <?php include "modal_create_area.php"; ?>
+                            <?php include "modal_create_proceso.php"; ?>
+                            <?php /*include "modal_update_administrador.php";*/ ?>
+                            <div id="modal_crear_asignacion" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Asignar Procesos a Administradores</h4>
+                                        </div>
+                                        <div class="modal-body" id="asignar_proceso">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="create_asignacion" class="btn btn-purple waves-effect" data-dismiss="modal">Guardar</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            <div id="modal_modificar_asignacion" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Asignar Procesos a Administradores</h4>
+                                        </div>
+                                        <div class="modal-body" id="actualizar_proceso">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="update_asignacion" class="btn btn-purple waves-effect" data-dismiss="modal">Guardar</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
+                            <!--=================================================================================
+                            =   MODAL PARA VER LOS MENSAJES RECIBIDOS Y ENVIADOS ENTRE LOS ADMINISTRADORES  =
+                            ==================================================================================-->
+                            <div id="modal_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Mensaje Nuevo</h4>
+                                        </div>
+                                        <div class="modal-body" id="contenido_mensaje">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" id="enviar_mensaje" class="btn btn-purple waves-effect" data-dismiss="modal">Enviar mensaje</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                            
+                            <?php include 'modal_message_blanck.php'; ?>
+
+                            <div id="modal_ver_mensaje" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Mensaje</h4>
+                                        </div>
+                                        <div class="modal-body" id="ver_mensaje">
+
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </div>
                         <!-- end row -->
 
@@ -303,13 +411,21 @@ $row = $resultado->fetch_assoc();
                         }
                     });
                 });
-            // 1. CARGAMOS LA TABLA DE CLIENTES
+                // 1. CARGAMOS LA TABLA DE CLIENTES
                 $('#tabla_administrador').load('tabla_administrador.php');
-            // COLOCAMOS EN FOCO EN EL INPUT CI/NIT
+                $('#tabla_area').load('tabla_area.php');
+                $('#tabla_proceso').load('tabla_proceso.php');
+                // COLOCAMOS EN FOCO EN EL INPUT CI/NIT
                 $('#modal_crear_administrador').on('shown.bs.modal',function(){
                     $('#adm_ci_nit').trigger('focus');
                 });
-            // 2.  REGISTRO DE UN NUEVO CLIENTE
+                $('#modal_crear_area').on('shown.bs.modal',function(){
+                    $('#area_nombre').trigger('focus');
+                });
+                $('#modal_crear_proceso').on('shown.bs.modal',function(){
+                    $('#proceso_nombre').trigger('focus');
+                });
+                // 2.  REGISTRO DE UN NUEVO CLIENTE
                 $('#create_administrador').click(function(){                    
                     var file_data = $("#upload_foto").prop("files")[0];
                     var datos = new FormData();
@@ -322,10 +438,11 @@ $row = $resultado->fetch_assoc();
                     datos.append("adm_area", $("#adm_area").val());
                     datos.append("usuario_user", $("#usuario_user").val());
                     datos.append("usuario_pass", $("#usuario_pass").val());
+                    datos.append("usuario_rol", $("#usuario_rol").val());
                     for (var value of datos.values()) {
                         console.log(value);
                     }
-                    //alert(datos); return false;
+                    alert(datos); return false;
                     $.ajax({
                         cahe: false,
                         contentType: false,
@@ -358,7 +475,7 @@ $row = $resultado->fetch_assoc();
                         }
                     });
                 });
-            // 3. ACTUALIZACION DE DATOS DEL CLIENTE
+                // 3. ACTUALIZACION DE DATOS DEL CLIENTE
                 $('#update_administrador').click(function(){
                     var datos = $('#formulario_actualizar_administrador').serialize();
                     //alert(datos); return false;
@@ -385,6 +502,123 @@ $row = $resultado->fetch_assoc();
                             }
                         }
                     });
+                });
+            });
+            
+            $("#create_proceso").click(function(){
+                var datos = $('#formulario_crear_proceso').serialize();
+                //alert(datos); return false;
+                $.ajax({
+                    type:"POST",
+                    url:"assets/inc/create_proceso.php",
+                    data:datos,
+                    success:function(response){
+                        if (response == 1) {
+                            $('#tabla_proceso').load('tabla_proceso.php');
+                            $('#modal_crear_proceso').on('hidden.bs.modal', function (){
+                                $(this).find('#formulario_crear_proceso')[0].reset();
+                            });
+                            /*$('#c_paciente')[0].reset();*/ //Limpia los inputs del formulario con id=c_paciente*/
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Proceso Agregado Exitosamente.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                });
+            });
+            $("#create_asignacion").click(function(){
+                var datos = $('#formulario_crear_asignacion').serialize();
+                //alert(datos); return false;
+                $.ajax({
+                    type:"POST",
+                    url:"assets/inc/create_asignacion.php",
+                    data:datos,
+                    success:function(response){
+                        if (response) {
+                            $('#tabla_administrador').load('tabla_administrador.php');
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Asignación exitosa.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
+                });
+            });
+            $(document).on("click", ".btnAsignar", function() {
+                var cadena = "adm_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                //alert(cadena); return false;
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_id_config.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $('#asignar_proceso').load('modal_create_asignacion.php');
+                            $('#modal_crear_asignacion').modal('show');
+                        }
+                    }
+                });
+            });
+            
+            $(document).on("click", ".btnModificar", function() {
+                var cadena = "adm_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                //alert(cadena); return false;
+                $.ajax({
+                    type: "POST",
+                    url: "assets/inc/update_id_config.php",
+                    data: cadena,
+                    success: function(r) {
+                        if(r) {
+                            $('#actualizar_proceso').load('modal_update_asignacion.php');
+                            $('#modal_modificar_asignacion').modal('show');
+                        }
+                    }
+                });
+            });
+            $("#update_asignacion").click(function(){
+                var datos = $('#formulario_crear_asignacion').serialize();
+                //alert(datos); return false;
+                $.ajax({
+                    type:"POST",
+                    url:"assets/inc/update_asignacion.php",
+                    data:datos,
+                    success:function(response){
+                        if (response) {
+                            $('#tabla_administrador').load('tabla_administrador.php');
+                            Swal.fire({
+                                type: 'success',
+                                title: 'Asignación exitosa.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Se ha Producido un Error.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            })
+                        }
+                    }
                 });
             });
             function showError(cadena){
@@ -446,8 +680,88 @@ $row = $resultado->fetch_assoc();
                 }else{
                     document.getElementById("create_administrador").disabled = true;
                 }
-                  
             }
+
+            /*$("#btnArea").click(function(){
+                swa = $("#switch_area").val();
+                swpr = $("#switch_proceso").val();
+                swp = $("#switch_personal").val();
+                if (swa == 0) {
+                    $("#card_area").css('border-color', '#32C861');
+                    $("#img_area").css('transform', 'rotate(180deg)');
+                    $("#switch_area").val('1');
+                    //$("#card_proceso").css('border-color', '#fff');
+                    if (swpr != '0') {
+                        $("#adm_proceso").addClass('collapse');
+                        $("#adm_proceso").removeClass('expanded');
+                        $("#card_proceso").css('border-color', '#fff');
+                        $("#img_proceso").css('transform', 'rotate(90deg)');
+                        $("#switch_proceso").val('0');
+                    }
+                    if (swp != '0') {
+                        $("#adm_personal").addClass('');
+                        $("#card_personal").css('border-color', '#fff');
+                        $("#img_personal").css('transform', 'rotate(90deg)');
+                        $("#switch_personal").val('0');
+                    }
+                }else{
+                    $("#card_area").css('border-color', '#fff');
+                    $("#img_area").css('transform', 'rotate(90deg)');
+                    $("#switch_area").val('0');
+                    
+                }
+            })
+            $("#btnProceso").click(function(){
+                swa = $("#switch_area").val();
+                swpr = $("#switch_proceso").val();
+                swp = $("#switch_personal").val();
+                if (swpr == 0) {
+                    $("#card_proceso").css('border-color', '#32C861');
+                    $("#img_proceso").css('transform', 'rotate(180deg)');
+                    $("#switch_proceso").val('1');
+                    //$("#card_proceso").css('border-color', '#fff');
+                    
+
+                }else{
+                    $("#card_proceso").css('border-color', '#fff');
+                    $("#img_proceso").css('transform', 'rotate(90deg)');
+                    $("#switch_proceso").val('0');
+                    
+                }
+            })
+            $("#btnPersonal").click(function(){
+                swa = $("#switch_area").val();
+                swpr = $("#switch_proceso").val();
+                swp = $("#switch_personal").val();
+                if (swp == 0) {
+                    $("#card_personal").css('border-color', '#32C861');
+                    $("#img_personal").css('transform', 'rotate(180deg)');
+                    $("#switch_personal").val('1');
+                    //$("#card_personal").css('border-color', '#fff');
+
+                }else{
+                    $("#card_personal").css('border-color', '#fff');
+                    $("#img_personal").css('transform', 'rotate(90deg)');
+                    $("#switch_personal").val('0');
+                    
+                }
+            })
+            $(".A").hide();
+            $(".Q").click(function() {
+                var that = this;
+                $(".A:visible").slideUp("slow");
+                $(".Q span.expanded")
+                    .removeClass('expanded')
+                    .addClass('collapsed');
+                $(this)
+                    .next(".A:hidden")
+                    .slideDown("slow", function(){
+                        $('span.collapsed', that)
+                            .removeClass('collapsed')
+                            .addClass('expanded');
+                    });
+            });
+            */
         </script>
     </body>
 </html>

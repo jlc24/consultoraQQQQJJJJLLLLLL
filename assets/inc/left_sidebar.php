@@ -1,15 +1,8 @@
-        <?php
-        $sql = "SELECT adm_id, adm_nombre, adm_area FROM administrador WHERE adm_id = '$adm_id'";
-        $resultado = $conexion->query($sql);
-        $row = $resultado->fetch_assoc();
-        ?>
             <div class="left-side-menu">
                 <div class="slimscroll-menu">
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
-
                         <ul class="metismenu" id="side-menu">
-
                             <li class="menu-title">Menú de Navegación</li>
                             <li>
                                 <a href="index.php">
@@ -24,16 +17,17 @@
                                 </a>
                             </li>
                             <?php
-                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
+                                if ($row['adm_rol'] == 'admin') { ?>
                                     <li>
                                         <a href="administrador.php">
                                             <i class="fas fa-user-tie"></i>
-                                            <span> Administradores </span>
+                                            <span> Administración </span>
                                         </a>
                                     </li>
                                 <?php
                                 }
-                                ?>
+                            ?>
+                            <?php if ($row['area_id'] == '1' || $row['adm_rol'] == 'admin') { ?>
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="fas fa-balance-scale"></i>
@@ -42,85 +36,62 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <?php
-                                    if ($adm_id == '3' || $adm_id == '10') {
-                                        echo "
-                                        <li><a href='hoja_ruta_penal.php'>Penal</a></li>
-                                        <li><a href='hoja_ruta_penal_ad.php'>Penal Aduanero</a></li>
-                                        ";
-                                    }elseif ($adm_id == '4') {
-                                        echo "
-                                        <li><a href='hoja_ruta_administrativo.php'>Administrativo</a></li>
-                                        <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
-                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
-                                        <li><a href='hoja_ruta_familia.php'>Familia</a></li>
-                                        ";
-                                    }elseif ($adm_id == '7') {
-                                        echo "
-                                        <li><a href='hoja_ruta_civil.php'>Civil</a></li>
-                                        ";
-                                    }elseif ($adm_id == '11') {
-                                        echo "
-                                        <li><a href='hoja_ruta_administrativo.php'>Administrativo</a></li>
-                                        <li><a href='hoja_ruta_civil.php'>Civil</a></li>
-                                        ";
-                                    }
-                                    elseif ($adm_id == '2') {
-                                        echo "
-                                        <li><a href='hoja_ruta_aduana.php'>Aduana</a></li>
-                                        <li><a href='hoja_ruta_penal_ad.php'>Penal Aduanero</a></li>
-                                        <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
-                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
-                                        ";
-                                    }else{
-                                        echo "
-                                        <li><a href='hoja_ruta_administrativo.php'>Administrativo</a></li>
-                                        <li><a href='hoja_ruta_aduana.php'>Aduana</a></li>
-                                        <li><a href='hoja_ruta_ait.php'>A.I.T.</a></li>
-                                        <li><a href='hoja_ruta_civil.php'>Civil</a></li>
-                                        <li><a href='hoja_ruta_contenciosotributario.php'>Contenciosos Tributario</a></li>
-                                        <li><a href='hoja_ruta_familia.php'>Familia</a></li>
-                                        <li><a href='hoja_ruta_penal.php'>Penal</a></li>
-                                        <li><a href='hoja_ruta_penal_ad.php'>Penal Aduanero</a></li>
-                                        ";
-                                    }
+                                        $sql = "SELECT asignacion.proceso_id, proceso_nombre FROM asignacion, proceso WHERE asignacion.proceso_id = proceso.proceso_id AND asignacion.area_id = '1' AND adm_id = '".$adm_id."' AND asig_estado = '1';";
+                                        $resultado = mysqli_query($conexion, $sql);
+                                        while ($registro = mysqli_fetch_assoc($resultado))
+                                        { ?>
+                                            <li><a href="hoja_ruta_<?php echo preg_replace('([^A-Za-z])', '', strtolower($registro['proceso_nombre'])) ; ?>.php"><?php echo ucwords(strtolower($registro['proceso_nombre'])); ?></a></li>
+                                    <?php
+                                        }
                                     ?>
                                 </ul>
                             </li>
                             <?php
-                                if ($row['adm_area'] == 'CONTABILIDAD' || $row['adm_area'] == 'MARKETING') {?>
-                                    <li>
-                                        <a href="javascript: void(0);">
-                                            <i class="fas fa-dollar-sign"></i>
-                                            <span> Área Contable </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <ul class="nav-second-level" aria-expanded="false">
-                                            <li><a href="#">Contable</a></li>
-                                            <li><a href="#">Financiero</a></li>
-                                            <li><a href="#">Auditoria</a></li>
-                                            <li><a href="#">Administrativo</a></li>
-                                        </ul>
-                                    </li>
+                            }
+                            if ($row['area_id'] == '2' || $row['adm_rol'] == 'admin') {?>
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span> Área Contable </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <?php
+                                            $sql = "SELECT asignacion.proceso_id, proceso_nombre FROM asignacion, proceso WHERE asignacion.proceso_id = proceso.proceso_id AND asignacion.area_id = '2' AND adm_id = '".$adm_id."' AND asig_estado = '1';";
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            while ($registro = mysqli_fetch_assoc($resultado))
+                                            { ?>
+                                                <li><a href="hoja_ruta_<?php echo preg_replace('([^A-Za-z])', '', strtolower($registro['proceso_nombre'])) ; ?>.php"><?php echo ucwords(strtolower($registro['proceso_nombre'])); ?></a></li>
+                                        <?php
+                                            }
+                                        ?>
+                                    </ul>
+                                </li>
                             <?php
-                                }
+                            }
                             ?>
                             <?php
-                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
-                                    <li>
-                                        <a href="javascript: void(0);">
-                                            <i class="fas fa-laptop-code"></i>
-                                            <span> Área Marketing </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <ul class="nav-second-level" aria-expanded="false">
-                                            <li><a href="#">Publicidad</a></li>
-                                            <li><a href="#">Marketing Digital</a></li>
-                                            <li><a href="#">Diseño Web</a></li>
-                                            <li><a href="#">Aplicacion Web</a></li>
-                                        </ul>
-                                    </li>
+                            if ($row['area_id'] == '3' || $row['adm_rol'] == 'admin') { ?>
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="fas fa-laptop-code"></i>
+                                        <span> Área Marketing </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <?php
+                                            $sql = "SELECT asignacion.proceso_id, proceso_nombre FROM asignacion, proceso WHERE asignacion.proceso_id = proceso.proceso_id AND asignacion.area_id = '3' AND adm_id = '".$adm_id."' AND asig_estado = '1';";
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            while ($registro = mysqli_fetch_assoc($resultado))
+                                            { ?>
+                                                <li><a href="hoja_ruta_<?php echo preg_replace('([^A-Za-z])', '', strtolower($registro['proceso_nombre'])) ; ?>.php"><?php echo ucwords(strtolower($registro['proceso_nombre'])); ?></a></li>
+                                        <?php
+                                            }
+                                        ?>
+                                    </ul>
+                                </li>
                             <?php
-                                }
+                            }
                             ?>
                             <li>
                                 <a href="agenda.php">
@@ -135,14 +106,29 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <!-- javascript: void(0); -->
-                                    <li><a href="#">Hojas Activas</a></li>
-                                    <li><a href="#">Hojas Inactivas</a></li>
+                                <?php
+                                if ($row['adm_rol'] == 'admin') { 
+                                    $area = "SELECT area_nombre FROM area;";
+                                    $resp = mysqli_query($conexion, $area);
+                                    while ($a = mysqli_fetch_assoc($resp)) { ?>
+                                        <li><a href="reporte_hoja_ruta_<?php echo preg_replace('([^A-Za-z])', '', strtolower($a['area_nombre'])); ?>.php"><?php echo ucwords(strtolower($a['area_nombre'])); ?></a></li>
+                                 <?php
+                                    }
+                                }else { 
+                                    $area = "SELECT DISTINCT area_nombre FROM area, administrador WHERE area.area_id = administrador.area_id AND adm_id = '".$adm_id."';";
+                                    $resp = mysqli_query($conexion, $area);
+                                    while ($a = mysqli_fetch_assoc($resp)) { ?>
+                                        <li><a href="reporte_hoja_ruta_<?php echo preg_replace('([^A-Za-z])', '', strtolower($a['area_nombre'])); ?>.php"><?php echo ucwords(strtolower($a['area_nombre'])); ?></a></li>
+                                 <?php
+                                    }
+                                }
+                                ?>
+                                    
                                 </ul>
                             </li>
                             <li>
                             <?php
-                                if ($row['adm_area'] == 'MARKETING' || $row['adm_id'] == '1') { ?>
+                                if ($row['adm_rol'] == 'admin') { ?>
                                     <a href="config.php">
                                         <i class="fas fa-cog"></i>
                                         <span> Configuración </span>

@@ -7,7 +7,7 @@ if (!isset($_SESSION['adm_id'])) {
 }
 
 $adm_id = $_SESSION['adm_id'];
-$sql = "SELECT adm_id, adm_nombre FROM administrador WHERE adm_id = '$adm_id'";
+$sql = "SELECT adm_id, adm_nombre, adm_rol, area_id FROM administrador WHERE adm_id = '$adm_id'";
 $resultado = $conexion->query($sql);
 $row = $resultado->fetch_assoc();
 ?>
@@ -47,7 +47,7 @@ $row = $resultado->fetch_assoc();
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
             <!-- ============================================================== -->
-
+            
             <div class="content-page">
                 <div class="content">
                     <!-- Start Content-->
@@ -60,7 +60,7 @@ $row = $resultado->fetch_assoc();
                                     <h4 class="page-title">
                                         <a style="color:purple;" href="#" data-toggle="modal" data-target="#modal_crear_hoja" title="Registrar Hoja de Ruta">
                                             <i class="far fa-plus-square"></i>
-                                        </a>Administración de Hojas de Ruta Penal Aduanero
+                                        </a>Administración de Hojas de Ruta Penal
                                     </h4>
                                 </div>
                             </div>
@@ -79,21 +79,21 @@ $row = $resultado->fetch_assoc();
                                 <!-- fin tabla hoja de ruta -->
 
                                 <!-- Modales para Crear y Actualizar, Hojas de Ruta, Etc -->
-                                <?php include "modal_create_hoja_penal_aduana.php"; ?>
+                                <?php include "modal_create_hoja_penal.php"; ?>
                                 <?php include "modal_create_cliente.php"; ?>
                                 <div id="modal_crear_evento_hoja" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-md">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Registrar Evento de Hojas de Ruta Penal Aduanero</h4>
+                                                <h4 class="modal-title" id="myModalLabel">Registrar Evento de Hojas de Ruta Penal</h4>
                                             </div>
                                             <div class="modal-body" id="evento_hoja">
                                                 <!-- Dentro de este DIV, se muestra el formulario de registro de un evento de la hoja de ruta -->
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" id="close_evento_hoja" class="btn btn-secondary waves-effect" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" id="create_evento_hoja" class="btn btn-purple waves-effect" data-dismiss="modal" disabled>Guardar</button>
+                                                <button type="button" id="create_evento_hoja" name="create_evento_hoja" class="btn btn-purple waves-effect" data-dismiss="modal" disabled>Guardar</button>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -117,13 +117,13 @@ $row = $resultado->fetch_assoc();
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-
+                                
                                 <div id="modal_editar_hoja" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                <h4 class="modal-title" id="myModalLabel">Actualizar Hoja de Ruta Penal Aduanero</h4>
+                                                <h4 class="modal-title" id="myModalLabel">Actualizar Hoja de Ruta Penal</h4>
                                             </div>
                                             <div class="modal-body" id="editar_hoja">
                                                 <!-- Dentro de este DIV, se muestra los datos de la hoja de ruta a editar -->
@@ -135,7 +135,7 @@ $row = $resultado->fetch_assoc();
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                
+
                                 <div id="modal_respuesta_hoja_detalle" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -212,7 +212,7 @@ $row = $resultado->fetch_assoc();
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                <!-- Modales para Crear y Actualizar, Medicamentos -->
+                                
 
                             </div>
                             <!-- end col-12 -->
@@ -370,36 +370,36 @@ $row = $resultado->fetch_assoc();
                 //PARA APILAR MODALES INDEFINIDAMENTE https://stackoverflow.com/questions/19305821/multiple-modals-overlay
                 // 2.  REGISTRO DE UN NUEVO CLIENTE
                 $('#create_cliente').click(function(){
-                        var datos = $('#formulario_crear_cliente').serialize();
-                        //alert(datos); return false;
-                        $.ajax({
-                            type:"POST",
-                            url:"assets/inc/create_cliente.php",
-                            data:datos,
-                            success:function(response){
-                                if (response == 1) {
-                                    $('#tabla_cliente').load('tabla_cliente.php');
-                                    $('#modal_crear_cliente').on('hidden.bs.modal', function (){
-                                        $(this).find('#formulario_crear_cliente')[0].reset();
-                                    });
-                                    /*$('#c_paciente')[0].reset();*/ //Limpia los inputs del formulario con id=c_paciente*/
-                                    Swal.fire({
-                                        type: 'success',
-                                        title: 'Cliente Agregado Exitosamente.',
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    })
-                                } else {
-                                    Swal.fire({
-                                        type: 'error',
-                                        title: 'Se ha Producido un Error.',
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    })
-                                }
+                    var datos = $('#formulario_crear_cliente').serialize();
+                    //alert(datos); return false;
+                    $.ajax({
+                        type:"POST",
+                        url:"assets/inc/create_cliente.php",
+                        data:datos,
+                        success:function(response){
+                            if (response == 1) {
+                                $('#tabla_cliente').load('tabla_cliente.php');
+                                $('#modal_crear_cliente').on('hidden.bs.modal', function (){
+                                    $(this).find('#formulario_crear_cliente')[0].reset();
+                                });
+                                /*$('#c_paciente')[0].reset();*/ //Limpia los inputs del formulario con id=c_paciente*/
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'Cliente Agregado Exitosamente.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
+                            } else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Se ha Producido un Error.',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
                             }
-                        });
+                        }
                     });
+                });
                 // 2.  REGISTRO DE UN NUEVO CLIENTE
 
                 $(".parsley_create_medicamento").parsley();
@@ -414,7 +414,7 @@ $row = $resultado->fetch_assoc();
                         data: cadena,
                         success: function(r) {
                                 if(r) {
-                                    $('#editar_hoja').load('modal_update_hoja_penal_aduana.php');
+                                    $('#editar_hoja').load('modal_update_hoja_penal.php');
                                     $('#modal_editar_hoja').modal('show');
                                 }
                             }
@@ -446,13 +446,13 @@ $row = $resultado->fetch_assoc();
                         data: cadena,
                         success: function(r) {
                                 if(r) {
-                                    $('#update_evento_hoja').load('modal_update_evento_hoja.php');
-                                    $('#modal_editar_evento_hoja').modal('show');
+                                    $('#finalizar_hoja_detalle').load('modal_finalizar_evento_hoja.php');
+                                    $('#modal_finalizar_hoja_detalle').modal('show');
                                 }
                             }
                     });
                 });
-
+                
                 // ACTUALIZACION DE DATOS DEL HOJA DE RUTA
                 $('#update_hoja').click(function(){
                     var datos = $('#formulario_actualizar_hoja').serialize();
@@ -463,7 +463,7 @@ $row = $resultado->fetch_assoc();
                         data:datos,
                         success:function(response){
                             if(response){
-                                $('#tabla_hoja').load('tabla_hoja_penaladuana_serverside.php');
+                                $('#tabla_hoja').load('tabla_hoja_penal_serverside.php');
                                 $('#modal_crear_hoja').on('hidden.bs.modal', function() {
                                     $(this).find('#formulario_crear_hoja')[0].reset();
                                 });
@@ -601,7 +601,7 @@ $row = $resultado->fetch_assoc();
                                     showConfirmButton: false,
                                     timer: 2000
                                 })
-                                $('#tabla_hoja').load('tabla_hoja_penaladuana_serverside.php');
+                                $('#tabla_hoja').load('tabla_hoja_penal_serverside.php');
                                 $('#modal_crear_hoja').on('hidden.bs.modal', function() {
                                     $(this).find('#formulario_crear_hoja')[0].reset();
                                 });
@@ -618,7 +618,7 @@ $row = $resultado->fetch_assoc();
                 });
                 
                 //CARGAMOS TODAS LAS HOJAS DE RUTA
-                $('#tabla_hoja').load('tabla_hoja_penaladuana_serverside.php');
+                $('#tabla_hoja').load('tabla_hoja_penal_serverside.php');
                 //COLOCAMOS EL FOCO EN UN INPUT PARA COLOCAR NOMBRE
                 $('#modal_crear_hoja').on('shown.bs.modal',function(){
                     $('#prod_nombre_comercial').trigger('focus');
@@ -676,9 +676,9 @@ $row = $resultado->fetch_assoc();
                     }
                 });
 
-                //AUTOCOMPLETA DATOS DEL ENCARGADO DE AREA AL QUE SE ENTREGA LA HOJA DE RUTA
-                $("#area_update").autocomplete({
-                    appendTo: '#modal_editar_hoja',
+                //AUTOCOMPLETA DATOS DEL ENCARGADO DE AREA AL QUE SE ENTREGA LA HOJA DE EVENTO RUTA
+                $("#area_destino").autocomplete({
+                    appendTo: '#modal_crear_evento_hoja',
                     source: function(request, response) {
                         $.ajax({
                             url: "autocomplete_nombre_responsable.php",
@@ -695,8 +695,8 @@ $row = $resultado->fetch_assoc();
                     minLength: 1,
                     select: function(event, ui) {
                         event.preventDefault();
-                        $('#area_update').val(ui.item.area);
-                        $('#responsable_update').val(ui.item.nombre);
+                        $('#area_destino').val(ui.item.area);
+                        $('#responsable_area').val(ui.item.nombre);
                         return false;
                     }
                 });

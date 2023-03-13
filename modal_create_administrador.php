@@ -5,7 +5,7 @@
         $admid = $_SESSION['adm_id'];
     ?>
         <!-- MODAL PARA REGISTRAR MEDICAMENTO -->
-        <div id="modal_crear_administrador" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div id="modal_crear_administrador" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -49,9 +49,14 @@
                                     <div class="col-md-9">
                                         <select class="custom-select custom-select-sm" id="adm_area" name="adm_area" onchange="showError('adm_area')">
                                             <option value="" selected="" disabled>---------- SELECCIONAR ----------</option>
-                                            <option value="JURIDICO">JURÍDICO</option>
-                                            <option value="CONTABLE">CONTABLE</option>
-                                            <option value="MARKETING">MARKETING</option>
+                                            <?php
+                                                $sql_area = "SELECT area_id, area_nombre FROM area;";
+                                                $resultado = mysqli_query($conexion, $sql_area);
+                                                while ($reg = mysqli_fetch_assoc($resultado)) { ?>
+                                                    <option value="<?php echo $reg['area_id']; ?>"><?php echo $reg['area_nombre']; ?></option>
+                                            <?php
+                                                }
+                                            ?>
                                         </select>
                                         <small><span style="color: red;" id="error_adm_area" >(Elija una opcion)</span></small>
                                     </div>
@@ -88,6 +93,13 @@
                                     <label class="col-md-3 col-form-label" for="simpleinput">Foto de perfil</label>
                                     <div class="custom-file col-md-9">
                                         <input type="file" id="upload_foto" name="upload_foto" class="form-control" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="form-group row" hidden>
+                                    <label class="col-md-3 col-form-label" for="usuario_rol">Rol</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="usuario_rol" name="usuario_rol" class="form-control form-control-sm" autocomplete="off" style="text-transform: uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase(); showError('usuario_rol'); verificar()" value="user">
+                                        <small><span style="color: red;" id="error_usuario_rol">(Se requiere nombre)</span></small>
                                     </div>
                                 </div>
                             </fieldset>

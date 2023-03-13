@@ -185,7 +185,7 @@
                             <select class="custom-select custom-select-sm" name="responsable_area" id="responsable_area" onchange="showError('responsable_area'); verificar()">
                                 <option value="" disabled selected>---- SELECCIONAR ----</option>
                                 <?php
-                                    $sql="SELECT adm_id, adm_nombre FROM `administrador` WHERE `adm_area` = 'JURIDICA';";
+                                    $sql="SELECT adm_id, adm_nombre FROM `administrador` WHERE `area_id` = '1';";
                                     $res=mysqli_query($conexion,$sql);
                                     while ($valores = mysqli_fetch_array($res)) {
                                         echo '<option value="'.$valores['adm_id'].'">'.$valores['adm_nombre'].'</option>';

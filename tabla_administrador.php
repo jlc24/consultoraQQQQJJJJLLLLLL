@@ -42,7 +42,10 @@
         <!--=================================================
         =            CONEXION A LA BASE DE DATOS            =
         ==================================================-->
-        <?php include('assets/inc/conexion.php'); ?>
+        <?php include('assets/inc/conexion.php'); 
+            session_start(); 
+            $adm_id = $_SESSION['adm_id'];
+        ?>
 
         <table id="administrador" class="table mb-0 table-sm table-striped table-bordered dt-responsive" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
             <thead style="background-color: #DBEDC8;">
@@ -67,14 +70,35 @@
                         <td><?php echo $registro["adm_nombre"]; ?></td>
                         <td><?php echo $registro["adm_direccion"]; ?></td>
                         <td><?php echo $registro["adm_celular"]; ?></td>
-                        <td><?php echo $registro["adm_area"]; ?></td>
+                        <td><?php 
+                            $sql1 = "SELECT area_nombre FROM area WHERE area_id = '".$registro['area_id']."';";
+                            $resul = $conexion->query($sql1);
+                            $area = $resul->fetch_assoc();
+                            echo $area["area_nombre"]; ?>
+                        </td>
                         <td>
-                            <a href='javascript:void(0);' class="btnUpdateAdmin" title='Actualizar Datos Administrador'>
-                                <i style='color: #DC5C05; --darkreader-inline-color:#DC5C05; font-size:20px;' class='far fa-edit'></i>
-                            </a>
-                            <a style="color:black;" href="javascript:void(0);" title="Eliminar Administrador" class='btnEliminarAdministrador'>
-                                <i style="color: #F96A74; --darkreader-inline-color:#DC5C05; font-size:20px;" class="far fa-trash-alt"></i>
-                            </a>
+                            <?php
+                                $sql2 = "SELECT DISTINCT adm_id FROM asignacion WHERE adm_id = '".$registro['adm_id']."';";
+                                $result = $conexion->query($sql2);
+                                $buscar = $result->fetch_assoc();
+                                if (!isset($buscar['adm_id'])) { ?>
+                                    <a href="javascript:void(0);" class="btnAsignar" title="Asignar Procesos">
+                                        <i style="color: #40CC6C; --darkreader-inline-color:#DC5C05; font-size:20px;" class="far fa-file"></i>
+                                    </a>
+                                    <a style="color:black;" href="javascript:void(0);" title="Eliminar Administrador" class="btnEliminarAdministrador">
+                                        <i style="color: #F96A74; --darkreader-inline-color:#DC5C05; font-size:20px;" class="far fa-trash-alt"></i>
+                                    </a>
+                            <?php
+                                }else { ?>
+                                    <a href="javascript:void(0);" class="btnModificar" title="Modificar Procesos">
+                                        <i style="color: #DC5C05; --darkreader-inline-color:#DC5C05; font-size:20px;" class="far fa-edit"></i>
+                                    </a>
+                                    <a style="color:black;" href="javascript:void(0);" title="Eliminar Administrador" class="btnEliminarAdministrador">
+                                        <i style="color: #F96A74; --darkreader-inline-color:#DC5C05; font-size:20px;" class="far fa-trash-alt"></i>
+                                    </a>
+                            <?php
+                                }
+                            ?>
                         </td>
                     </tr>
                 <?php

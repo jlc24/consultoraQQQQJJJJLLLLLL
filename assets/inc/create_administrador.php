@@ -9,7 +9,7 @@
 	$user = $_POST['usuario_user'];
 	$pass = $_POST['usuario_pass'];
 	$pass_sha1 = sha1($pass);
-	$rol = 'admin';
+	$rol = $_POST['usuario_rol'];
 	$fec = date("Y-m-d H:i:s");
 
 	if (isset($_FILES['upload_foto']['name'])) {

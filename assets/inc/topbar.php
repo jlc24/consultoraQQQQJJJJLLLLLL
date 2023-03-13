@@ -67,7 +67,7 @@
                         </span>
                         <span class="logo-sm">
                             <!-- <span class="logo-sm-text-dark">U</span> -->
-                            <img src="assets/images/logo-sm.png" alt="" height="28">
+                            <img src="assets/images/logo-sm.png" alt="" height="35">
                         </span>
                     </a>
                 </div>

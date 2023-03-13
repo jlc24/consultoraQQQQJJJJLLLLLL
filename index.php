@@ -6,7 +6,7 @@ if (!isset($_SESSION['adm_id'])) {
 }
 
 $adm_id = $_SESSION['adm_id'];
-$sql = "SELECT adm_id, adm_nombre, adm_area FROM administrador WHERE adm_id = '$adm_id'";
+$sql = "SELECT adm_id, adm_nombre, adm_rol, area_id FROM administrador WHERE adm_id = '$adm_id'";
 $resultado = $conexion->query($sql);
 $row = $resultado->fetch_assoc();
 ?>
@@ -40,7 +40,7 @@ $row = $resultado->fetch_assoc();
                 <div class="container-fluid">
                     <!-- start page title -->
                     <?php 
-                        $sql1 = "SELECT adm_id, adm_nombre, adm_area FROM administrador WHERE adm_id = '$adm_id'";
+                        $sql1 = "SELECT adm_id, adm_nombre, area_id FROM administrador WHERE adm_id = '$adm_id'";
                         $resultado1 = $conexion->query($sql1);
                         $row1 = $resultado1->fetch_assoc(); 
                     ?>
@@ -72,8 +72,8 @@ $row = $resultado->fetch_assoc();
                                         <h3 class="font-weight-medium my-2">
                                             <span data-plugin="counterup">
                                                 <?php //include('assets/inc/conexion.php');
-                                                $filas = mysqli_fetch_row(mysqli_query($conexion, "SELECT SUM(fac_total) FROM factura"));
-                                                echo (int)$filas[0]; ?>
+                                                //$filas = mysqli_fetch_row(mysqli_query($conexion, "SELECT SUM(fac_total) FROM factura"));
+                                                //echo (int)$filas[0]; ?>
                                             </span>
                                         </h3>
                                         <p class="m-0">Ene - Dic <?php echo date("Y"); ?></p>
@@ -88,7 +88,6 @@ $row = $resultado->fetch_assoc();
                                     <div class="avatar-lg bg-icon rounded-circle align-self-center">
                                         <img class="avatar-md" src="assets/images/icons/businessman.svg" title="businessman.svg">
                                     </div>
-
                                     <div class="wigdet-two-content media-body">
                                         <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Clientes</p>
                                         <h3 class="font-weight-medium my-2">
@@ -113,7 +112,6 @@ $row = $resultado->fetch_assoc();
                                     <div class="avatar-lg bg-icon rounded-circle align-self-center">
                                         <img class="avatar-md" src="assets/images/icons/contacts.svg" title="contacts.svg">
                                     </div>
-
                                     <div class="wigdet-two-content media-body">
                                         <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Hojas de Ruta</p>
                                         <h3 class="font-weight-medium my-2">
@@ -137,7 +135,6 @@ $row = $resultado->fetch_assoc();
                                     <div class="avatar-lg bg-icon rounded-circle align-self-center">
                                         <img class="avatar-md" src="assets/images/icons/customer_support.svg" title="customer_support.svg">
                                     </div>
-
                                     <div class="wigdet-two-content media-body">
                                         <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Administradores</p>
                                         <h3 class="font-weight-medium my-2">
@@ -155,7 +152,7 @@ $row = $resultado->fetch_assoc();
                             </div>
                         </div>
                         <?php 
-                            if ($row['adm_id'] == '1' || $row['adm_id'] == '9') { ?>
+                            if ($adm_id == '1' || $adm_id == '9') { ?>
                                 <div class="col-12">
                                     <div class="card-box widget-box-two widget-two-custom p-2">
                                         <div class="row">
@@ -364,7 +361,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -376,7 +372,6 @@ $row = $resultado->fetch_assoc();
                                                             ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div style="width: 483px; height: 35px; margin: 0px; padding: 0px;">
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -394,8 +389,6 @@ $row = $resultado->fetch_assoc();
                                                         
                                                     </table>
                                                 </div>
-                                                    
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -403,7 +396,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -415,7 +407,6 @@ $row = $resultado->fetch_assoc();
                                                              ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -441,15 +432,14 @@ $row = $resultado->fetch_assoc();
                                             <div class="widget-two-content media-body col-xl-3" style="text-align: left; display: inline-block; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 20px;"> ÁREA MARKETING </span>
                                             </div>
-                                            
                                             <div class="wigdet-two-content media-body col-xl-2" style=" padding-top: 5px; display: inline-block; text-align: left; margin-left: 0px; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 15px;">Notificaciones </span>
                                                 <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
                                                         <?php
-                                                    $sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
+                                                    /*$sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
                                                     $resultado = mysqli_query($conexion, $sql);
                                                     $filas = mysqli_fetch_row($resultado);
-                                                    $total = (int)$filas[0];
+                                                    $total = (int)$filas[0];*/
                                                      ?>
                                                 </span>
                                             </div>
@@ -457,10 +447,10 @@ $row = $resultado->fetch_assoc();
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 15px;">Audiencias </span>
                                                 <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
                                                         <?php
-                                                    $sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
+                                                    /*$sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
                                                     $resultado = mysqli_query($conexion, $sql);
                                                     $filas = mysqli_fetch_row($resultado);
-                                                    $total = (int)$filas[0];
+                                                    $total = (int)$filas[0];*/
                                                     ?>
                                                 </span>
                                             </div>
@@ -468,10 +458,10 @@ $row = $resultado->fetch_assoc();
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 15px;">Incumplidas </span>
                                                 <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
                                                         <?php
-                                                    $sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
+                                                    /*$sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
                                                     $resultado = mysqli_query($conexion, $sql);
                                                     $filas = mysqli_fetch_row($resultado);
-                                                    $total = (int)$filas[0];
+                                                    $total = (int)$filas[0];*/
                                                      ?>
                                                 </span>
                                             </div>
@@ -488,20 +478,8 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Notificaciones</span>
-                                                        
-                                                    </div>
-                                                    <div>
-                                                        <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
-                                                                <?php
-                                                            $sql = "SELECT COUNT(*) FROM hoja_detalle WHERE det_leido = 0 AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
-                                                            $resultado = mysqli_query($conexion, $sql);
-                                                            $filas = mysqli_fetch_row($resultado);
-                                                            $total = (int)$filas[0];
-                                                             ?>
-                                                        </span>
                                                     </div>
                                                 </div><br>
-                                                
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #E67E22;">
                                                         <thead style="background-color: #E67E22; color: #fff;">
@@ -522,7 +500,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -534,7 +511,6 @@ $row = $resultado->fetch_assoc();
                                                              ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div style="width: 483px; height: 35px; margin: 0px; padding: 0px;">
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -552,8 +528,6 @@ $row = $resultado->fetch_assoc();
                                                         
                                                     </table>
                                                 </div>
-                                                    
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -561,7 +535,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -573,7 +546,6 @@ $row = $resultado->fetch_assoc();
                                                             ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -591,10 +563,9 @@ $row = $resultado->fetch_assoc();
                                     </div> <!--div Collapse -->
                                 </div>
                         <?php
-                            }elseif ($row['adm_area'] == 'JURIDICA') { ?>
+                            }elseif ($row['area_id'] == '1') { ?>
                                 <div class="col-12">
                                     <div class="card-box widget-box-two widget-two-custom p-2">
-                                        
                                         <div class="row">
                                             <div class="widget-two-content media-body col-xl-1" style="text-align: left; display: inline-block; padding-right: 0px;">
                                                 <span><i class="fas fa-balance-scale fa-2x"></i></span>
@@ -664,7 +635,6 @@ $row = $resultado->fetch_assoc();
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Audiencias</span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div style="width: 483px; height: 35px; margin: 0px; padding: 0px;">
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #32C861;">
@@ -710,7 +680,7 @@ $row = $resultado->fetch_assoc();
                                     </div> <!--div Collapse -->
                                 </div>
                         <?php
-                            }elseif ($row['adm_area'] == 'CONTABILIDAD') { ?>
+                            }elseif ($row['area_id'] == '2') { ?>
                                 <div class="col-12">
                                     <div class="card-box widget-box-two widget-two-custom p-2">
                                         <div class="row">
@@ -720,7 +690,6 @@ $row = $resultado->fetch_assoc();
                                             <div class="widget-two-content media-body col-xl-3" style="text-align: left; display: inline-block; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 20px;"> ÁREA CONTABLE </span>
                                             </div>
-                                            
                                             <div class="wigdet-two-content media-body col-xl-2" style=" padding-top: 5px; display: inline-block; text-align: left; margin-left: 0px; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 15px;">Notificaciones </span>
                                                 <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
@@ -767,7 +736,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Notificaciones</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
@@ -780,7 +748,6 @@ $row = $resultado->fetch_assoc();
                                                         </span>
                                                     </div>
                                                 </div><br>
-                                                
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #E67E22;">
                                                         <thead style="background-color: #E67E22; color: #fff;">
@@ -830,7 +797,6 @@ $row = $resultado->fetch_assoc();
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -838,7 +804,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -850,7 +815,6 @@ $row = $resultado->fetch_assoc();
                                                             echo $total; ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div style="width: 483px; height: 35px; margin: 0px; padding: 0px;">
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -867,7 +831,6 @@ $row = $resultado->fetch_assoc();
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
                                                         <tbody>
                                                         <?php
-                                
                                                             $sql = "SELECT `det_id`,`hoja_numero_tramite`, `hoja_tipo_proceso`,`det_encargado`, det_leido
                                                                     FROM hoja_detalle JOIN hoja 
                                                                     WHERE hoja_detalle.hoja_id = hoja.hoja_id AND NOW() > det_fin AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
@@ -907,8 +870,6 @@ $row = $resultado->fetch_assoc();
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                    
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -916,7 +877,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -928,7 +888,6 @@ $row = $resultado->fetch_assoc();
                                                             echo $total; ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -941,7 +900,6 @@ $row = $resultado->fetch_assoc();
                                                         </thead>
                                                         <tbody>
                                                         <?php
-                                
                                                             $sql = "SELECT `det_id`,`hoja_numero_tramite`, `hoja_tipo_proceso`,`det_encargado`, det_leido
                                                                     FROM hoja_detalle JOIN hoja 
                                                                     WHERE hoja_detalle.hoja_id = hoja.hoja_id AND NOW() > det_fin AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
@@ -986,7 +944,7 @@ $row = $resultado->fetch_assoc();
                                     </div> <!--div Collapse -->
                                 </div>
                         <?php
-                            }elseif ($row['adm_area'] == 'MARKETING') { ?>
+                            }elseif ($row['area_id'] == '3') { ?>
                                 <div class="col-12">
                                     <div class="card-box widget-box-two widget-two-custom p-2">
                                         <div class="row">
@@ -996,7 +954,6 @@ $row = $resultado->fetch_assoc();
                                             <div class="widget-two-content media-body col-xl-3" style="text-align: left; display: inline-block; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 20px;"> ÁREA MARKETING </span>
                                             </div>
-                                            
                                             <div class="wigdet-two-content media-body col-xl-2" style=" padding-top: 5px; display: inline-block; text-align: left; margin-left: 0px; padding-left: 0px;">
                                                 <span class="m-0 font-weight-medium text-truncate" style="font-size: 15px;">Notificaciones </span>
                                                 <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
@@ -1043,7 +1000,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Notificaciones</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-warning" data-plugin="counterup" style="font-size: 15px;">
@@ -1056,7 +1012,6 @@ $row = $resultado->fetch_assoc();
                                                         </span>
                                                     </div>
                                                 </div><br>
-                                                
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #E67E22;">
                                                         <thead style="background-color: #E67E22; color: #fff;">
@@ -1106,7 +1061,6 @@ $row = $resultado->fetch_assoc();
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -1114,7 +1068,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -1126,7 +1079,6 @@ $row = $resultado->fetch_assoc();
                                                             echo $total; ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div style="width: 483px; height: 35px; margin: 0px; padding: 0px;">
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -1143,7 +1095,6 @@ $row = $resultado->fetch_assoc();
                                                     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
                                                         <tbody>
                                                         <?php
-                                
                                                             $sql = "SELECT `det_id`,`hoja_numero_tramite`, `hoja_tipo_proceso`,`det_encargado`, det_leido
                                                                     FROM hoja_detalle JOIN hoja 
                                                                     WHERE hoja_detalle.hoja_id = hoja.hoja_id AND NOW() > det_fin AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
@@ -1183,8 +1134,6 @@ $row = $resultado->fetch_assoc();
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                    
-                                                
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-sm-16">
@@ -1192,7 +1141,6 @@ $row = $resultado->fetch_assoc();
                                                 <div class="media">
                                                     <div class="wigdet-two-content media-body" style="text-align: left;">
                                                         <span class="m-0 font-weight-medium text-truncate" title="Statistics">Tareas Incumplidas</span>
-                                                        
                                                     </div>
                                                     <div>
                                                         <span class="badge badge-danger" data-plugin="counterup" style="font-size: 15px;">
@@ -1204,7 +1152,6 @@ $row = $resultado->fetch_assoc();
                                                             echo $total; ?>
                                                         </span>
                                                     </div>
-                                                    
                                                 </div><br>
                                                 <div>
                                                     <table class="table table-sm table-striped" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #F96A74;">
@@ -1217,7 +1164,6 @@ $row = $resultado->fetch_assoc();
                                                         </thead>
                                                         <tbody>
                                                         <?php
-                                
                                                             $sql = "SELECT `det_id`,`hoja_numero_tramite`, `hoja_tipo_proceso`,`det_encargado`, det_leido
                                                                     FROM hoja_detalle JOIN hoja 
                                                                     WHERE hoja_detalle.hoja_id = hoja.hoja_id AND NOW() > det_fin AND det_estado = 'EJECUCION' AND det_encargado = '".$_SESSION['adm_id']."';";
@@ -1267,7 +1213,6 @@ $row = $resultado->fetch_assoc();
                     </div>
                     
                     <!-- end row -->
-                    
                     
                     <div id="modal_respuesta_hoja_detalle" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-lg">

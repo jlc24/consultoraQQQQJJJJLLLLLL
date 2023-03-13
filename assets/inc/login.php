@@ -17,10 +17,10 @@ if (isset($_POST['ingresar'])) {
 		$row = $resultado->fetch_assoc();
 		$_SESSION['adm_id'] = $row['adm_id'];
         $_SESSION['adm_rol'] = $row['adm_rol'];
-        if ($row['adm_rol'] == 'admin') {
+        if ($row['adm_rol'] == 'admin' || $row['adm_rol'] == 'user') {
             header('Location: index.php');
         } else {
-            header('Location: tpv_ventas.php');
+            header('Location: index.php');
         }
 	} else {
 		echo "<script>
