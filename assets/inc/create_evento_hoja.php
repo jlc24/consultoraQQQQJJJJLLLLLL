@@ -75,7 +75,21 @@ include ('conexion.php');
 					echo "Ha habido un error al cargar tu archivo.";
 				}
 			}else {
-				echo " no se pudo crear directorio </br>";
+				if (move_uploaded_file($ruta_temp, $rutafile)) {
+					$sql1 = "UPDATE hoja_detalle SET 	det_envio_ruta_file = '$ruta'
+												WHERE det_id = '".$row['det_id']."';";
+					echo mysqli_query($conexion,$sql1);
+					if (mysqli_query($conexion,$sql1) == 1) {
+						$tex='#414d5f';
+						$fon='#414d5f';
+						$des = $hoja_nom.", ".$obs;
+						$sql2 = "INSERT INTO eventos ( id,  titulo, descripcion, inicio, fin, colortexto, colorfondo )
+									VALUES ( NULL,'$accion', '$des', '$ini', '$fin', '$tex', '$fon' )";
+						echo mysqli_query($conexion, $sql2);
+					}
+				} else {
+					echo "Ha habido un error al cargar tu archivo.";
+				}
 			}
 		}
 	}elseif($_POST['detalle_accion'] != 'AUDIENCIA')  {
