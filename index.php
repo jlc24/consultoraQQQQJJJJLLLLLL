@@ -4,7 +4,14 @@ session_start();
 if (!isset($_SESSION['adm_id'])) {
     header('Location: login.php');
 }
-
+function fechaletra($fecha){
+    $day = date('d',strtotime($fecha));
+    $month = date('m',strtotime($fecha));
+    $year = date('Y',strtotime($fecha));
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $letra = $day.' de '.$meses[$month - 1].' de '.$year;
+    return $letra;
+}
 $adm_id = $_SESSION['adm_id'];
 $sql = "SELECT adm_id, adm_nombre, adm_rol, area_id FROM administrador WHERE adm_id = '$adm_id'";
 $resultado = $conexion->query($sql);
@@ -59,28 +66,8 @@ $row = $resultado->fetch_assoc();
                     <!--========================================
                         =            Contenido Principal           =
                         =========================================-->
+                     
                     <div class="row">
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="card-box widget-box-two widget-two-custom">
-                                <div class="media">
-                                    <div class="avatar-lg bg-icon rounded-circle align-self-center">
-                                        <img class="avatar-md" src="assets/images/icons/calendar.svg" title="calendar.svg">
-                                    </div>
-
-                                    <div class="wigdet-two-content media-body">
-                                        <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Reuniones</p>
-                                        <h3 class="font-weight-medium my-2">
-                                            <span data-plugin="counterup">
-                                                <?php //include('assets/inc/conexion.php');
-                                                //$filas = mysqli_fetch_row(mysqli_query($conexion, "SELECT SUM(fac_total) FROM factura"));
-                                                //echo (int)$filas[0]; ?>
-                                            </span>
-                                        </h3>
-                                        <p class="m-0">Ene - Dic <?php echo date("Y"); ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <!-- end col -->
                         <div class="col-xl-3 col-sm-6">
                             <div class="card-box widget-box-two widget-two-custom ">
@@ -103,10 +90,6 @@ $row = $resultado->fetch_assoc();
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end col -->
-
-                        <div class="col-xl-3 col-sm-6">
                             <div class="card-box widget-box-two widget-two-custom ">
                                 <div class="media">
                                     <div class="avatar-lg bg-icon rounded-circle align-self-center">
@@ -129,28 +112,108 @@ $row = $resultado->fetch_assoc();
                         </div>
                         <!-- end col -->
 
-                        <div class="col-xl-3 col-sm-6">
+                        <!-- end col -->
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="card-box widget-box-two widget-two-custom">
+                                <div class="datepicker">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-sm-6">
                             <div class="card-box widget-box-two widget-two-custom ">
                                 <div class="media">
                                     <div class="avatar-lg bg-icon rounded-circle align-self-center">
-                                        <img class="avatar-md" src="assets/images/icons/customer_support.svg" title="customer_support.svg">
+                                        <img class="avatar-md" src="assets/images/icon_png/audiencia.png" title="customer_support.svg">
                                     </div>
                                     <div class="wigdet-two-content media-body">
-                                        <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Administradores</p>
-                                        <h3 class="font-weight-medium my-2">
-                                            <span data-plugin="counterup">
-                                                <?php $sql = "SELECT COUNT(*) FROM administrador";
-                                                $resultado = mysqli_query($conexion, $sql);
-                                                $filas = mysqli_fetch_row($resultado);
-                                                $total = (int)$filas[0];
-                                                echo $total; ?>
-                                            </span>
-                                        </h3>
-                                        <p class="m-0">Ene - Dic <?php echo date("Y"); ?></p>
+                                        <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Audiencias : <?php echo fechaletra(date('Y-m-d')); ?></p>
+                                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <?php 
+                                                $hoyver = date('Y-m-d');
+                                                $hoy = date('Y-m-d', strtotime($hoyver."+ 1 days"));
+                                                $manana = date('Y-m-d', strtotime($hoy."+ 1 days"));
+                                                $sql = "SELECT det_id, hoja.hoja_id, hoja_numero_tramite, det_observacion, det_lugar_juzgado, det_juzgado, det_audiencia FROM hoja,hoja_detalle WHERE hoja.hoja_id = hoja_detalle.hoja_id AND det_audiencia BETWEEN '".$hoy."' AND '".$manana."';";
+                                                $cont = 0;
+                                                $resultado = mysqli_query($conexion, $sql); 
+                                                if (!empty($resultado)) { 
+                                                    while($a = mysqli_fetch_assoc($resultado)){
+                                                        if ($cont == 0) { ?>
+                                                            <div class="carousel-item active">
+                                                                <h3><?php echo $a['hoja_numero_tramite']; ?></h3>
+                                                                <h5><?php echo $a['det_lugar_juzgado']." | ".$a['det_juzgado']." | ".(date('H:i', strtotime($a['det_audiencia']))); ?></h5>
+                                                            </div>
+                                                        <?php
+                                                        }else { ?>
+                                                            <div class="carousel-item">
+                                                                <h3><?php echo $a['hoja_numero_tramite']; ?></h3>
+                                                                <h5><?php echo $a['det_lugar_juzgado']." | ".$a['det_juzgado']." | ".(date('H:i', strtotime($a['det_audiencia']))); ?></h5>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                        $cont++;
+                                                    }
+                                                }else { ?>
+                                                    <h3>Sin Audiencias</h3>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-box widget-box-two widget-two-custom ">
+                                <div class="media">
+                                    <div class="avatar-lg bg-icon rounded-circle align-self-center">
+                                        <img class="avatar-md" src="assets/images/icons/calendar.svg" title="calendar.svg">
+                                    </div>
+                                    <div class="wigdet-two-content media-body">
+                                        <?php 
+                                            $month = date('m',strtotime(date('Y-m-d')));
+                                            $mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                                            $let = $mes[$month - 1];?>
+                                        <p class="m-0 text-uppercase font-weight-medium text-truncate" title="Statistics">Proxima Audiencia : <strong> <?php echo $let; ?></strong></p>
+                                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <?php 
+                                                $hoyver = date('Y-m-d');
+                                                $hoy = date('Y-m-d', strtotime($hoyver."+ 2 days"));
+                                                $manana = date('Y-m-d', strtotime($hoy."+ 30 days"));
+                                                $sql = "SELECT det_id, hoja.hoja_id, hoja_numero_tramite, det_observacion, det_lugar_juzgado, det_juzgado, det_audiencia FROM hoja,hoja_detalle WHERE hoja.hoja_id = hoja_detalle.hoja_id AND det_audiencia BETWEEN '".$hoy."' AND '".$manana."';";
+                                                $cont = 0;
+                                                $resultado = mysqli_query($conexion, $sql); 
+                                                if (!empty($resultado)) { 
+                                                    while($a = mysqli_fetch_assoc($resultado)){
+                                                        if ($cont == 0) { ?>
+                                                            <div class="carousel-item active">
+                                                                <h3><?php echo $a['hoja_numero_tramite']; ?></h3>
+                                                                <h5><?php echo $a['det_lugar_juzgado']." | ".$a['det_juzgado']." | ".(date('d-m', strtotime($a['det_audiencia']))); ?></h5>
+                                                            </div>
+                                                        <?php
+                                                        }else{ ?>
+                                                            <div class="carousel-item">
+                                                                <h3><?php echo $a['hoja_numero_tramite']; ?></h3>
+                                                                <h5><?php echo $a['det_lugar_juzgado']." | ".$a['det_juzgado']." | ".(date('d-m', strtotime($a['det_audiencia']))); ?></h5>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                        $cont++;
+                                                    }
+                                                }else{ ?>
+                                                    <h3>Sin Audiencias</h3>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <?php 
                             if ($adm_id == '1' || $adm_id == '9') { ?>
                                 <div class="col-12">
@@ -1355,6 +1418,7 @@ $row = $resultado->fetch_assoc();
             $('#tincumplidas_table').load('tabla_tincumplidas.php');
             $('#tabla_all_tareas').load('tabla_all_tareas.php');
             $('#tabla_tincumplida').load('tabla_tareas_incumplidas.php');
+            $(".datepicker").datepicker();
         });
         $("#destino_mensaje_blanco").autocomplete({
             appendTo: '#modal_mensaje_blanco',
@@ -1942,6 +2006,52 @@ $row = $resultado->fetch_assoc();
                 }
             })
         });
+        $(document).on("click", ".btnVerRespuesta", function() {
+            cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+            //alert(cadena); return false;
+            //https://jsonformatter.org/jsbeautifier
+            $.ajax({
+                type: "POST",
+                url: "assets/inc/update_hoja_id.php",
+                data: cadena,
+                success: function(r) {
+                    if(r) {
+                        $('#respuesta_hoja_detalle').load('modal_respuesta_evento_hoja.php');
+                        $('#modal_respuesta_hoja_detalle').modal('show');
+                    }
+                }
+            });
+        });
+        function verFileSize(file_nombre){
+            var archivo = $("#"+file_nombre).prop("files")[0].name;
+            var ext=["doc","docx","pdf","jpge","jpg","xls","xlsx"];
+            var tam= $("#"+file_nombre).prop("files")[0].size;
+            archnom = archivo.slice((archivo.lastIndexOf(".") - 1 >>> 0) + 2);
+            var buscar = ext.indexOf(archnom);
+            if (buscar == -1) {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Archivo no permitido',
+                    text: 'El archivo debe ser: doc, pdf o jpg',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                $("#"+file_nombre).val('');
+                $("#"+file_nombre).html('');
+            } else {
+                if (tam > 5242880) {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'El archivo es demasiado grande',
+                        text: 'Los archivos deben pesar menos de 5MB',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $("#"+file_nombre).val('');
+                    $("#"+file_nombre).html('');
+                }
+            }
+        }
     </script>
 </body>
 </html>

@@ -99,10 +99,11 @@
                         <div class="form-group row">
                             <label class="col-md-8 col-form-label">Adjuntar archivos</label>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row justify-content-center">
                             <div class="col-md-12">
                                 <input type="file" id="newFile" name="newFile" class="form-control">
                             </div>
+                            <small><span style="color: red;">Tamaño max. del archivo 5mb.</span></small>
                         </div>
                         <div class="form-group row" hidden>
                             <label class="col-md-4 col-form-label">Estado proceso</label>
@@ -208,10 +209,11 @@
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Adjuntar archivos</label>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <div class="col-md-12">
-                            <input type="file" id="newFile" name="newFile" class="form-control">
+                            <input type="file" id="newFile" name="newFile" class="form-control" onchange="verFileSize('newFile')">
                         </div>
+                        <small><span style="color: red;">Tamaño max. del archivo 5mb.</span></small>
                     </div>
                     <div class="form-group row" hidden>
                         <label class="col-md-4 col-form-label">Estado proceso</label>

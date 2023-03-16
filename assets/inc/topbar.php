@@ -40,9 +40,13 @@
                             <!-- item-->
                             <?php
                                 if ($row['adm_id'] == '9' || $row['adm_id'] == '1') {?>
+                                    <a href="administrador.php" class="dropdown-item notify-item">
+                                        <i class="fas fa-user-tie"></i>
+                                        <span>Administración</span>
+                                    </a>
                                     <a href="config.php" class="dropdown-item notify-item">
                                         <i class="fe-settings"></i>
-                                        <span>Configuraciones</span>
+                                        <span>Configuración</span>
                                     </a>
                             <?php
                                 }

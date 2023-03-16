@@ -63,7 +63,7 @@ $row = $resultado->fetch_assoc();
                                     <div class="card-body">
                                         <h5 class="card-title">Administración de Áreas</h5>
                                         <span>
-                                            <button type="button" id="btnArea" name="btnarea" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_area" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_area" style="transform: rotate(90deg);"></button>
+                                            <button type="button" id="btnArea" name="btnarea" class="btn btn-outline-info btn-sm"  title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_area" style="transform: rotate(90deg);"></button>
                                         </span>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@ $row = $resultado->fetch_assoc();
                                     <div class="card-body">
                                         <h5 class="card-title">Administración de Procesos</h5>
                                         <span>
-                                            <button type="button" id="btnProceso" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_proceso" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_proceso" style="transform: rotate(90deg);"></button>
+                                            <button type="button" id="btnProceso" class="btn btn-outline-info btn-sm"  title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_proceso" style="transform: rotate(90deg);"></button>
                                         </span>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@ $row = $resultado->fetch_assoc();
                                     <div class="card-body">
                                         <h5 class="card-title">Administración de Personal</h5>
                                         <span>
-                                            <button type="button" id="btnPersonal" class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#adm_personal" title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_personal" style="transform: rotate(90deg);"></button>
+                                            <button type="button" id="btnPersonal" class="btn btn-outline-info btn-sm"  title="Ver Areas"><img src="assets/images/icons/collapse.svg" alt="" width="20px" id="img_personal" style="transform: rotate(90deg);"></button>
                                         </span>
                                     </div>
                                 </div>
@@ -682,24 +682,24 @@ $row = $resultado->fetch_assoc();
                 }
             }
 
-            /*$("#btnArea").click(function(){
+            $("#btnArea").click(function(){
                 swa = $("#switch_area").val();
                 swpr = $("#switch_proceso").val();
                 swp = $("#switch_personal").val();
                 if (swa == 0) {
                     $("#card_area").css('border-color', '#32C861');
                     $("#img_area").css('transform', 'rotate(180deg)');
+                    $("#adm_area").slideDown('slow');
                     $("#switch_area").val('1');
                     //$("#card_proceso").css('border-color', '#fff');
                     if (swpr != '0') {
-                        $("#adm_proceso").addClass('collapse');
-                        $("#adm_proceso").removeClass('expanded');
+                        $("#adm_proceso").slideUp('slow');
                         $("#card_proceso").css('border-color', '#fff');
                         $("#img_proceso").css('transform', 'rotate(90deg)');
                         $("#switch_proceso").val('0');
                     }
                     if (swp != '0') {
-                        $("#adm_personal").addClass('');
+                        $("#adm_personal").slideUp('slow');
                         $("#card_personal").css('border-color', '#fff');
                         $("#img_personal").css('transform', 'rotate(90deg)');
                         $("#switch_personal").val('0');
@@ -708,7 +708,7 @@ $row = $resultado->fetch_assoc();
                     $("#card_area").css('border-color', '#fff');
                     $("#img_area").css('transform', 'rotate(90deg)');
                     $("#switch_area").val('0');
-                    
+                    $("#adm_area").slideUp('slow');
                 }
             })
             $("#btnProceso").click(function(){
@@ -718,14 +718,27 @@ $row = $resultado->fetch_assoc();
                 if (swpr == 0) {
                     $("#card_proceso").css('border-color', '#32C861');
                     $("#img_proceso").css('transform', 'rotate(180deg)');
+                    $("#adm_proceso").slideDown('slow');
                     $("#switch_proceso").val('1');
                     //$("#card_proceso").css('border-color', '#fff');
-                    
+                    if (swa != '0') {
+                        $("#adm_area").slideUp('slow');
+                        $("#card_area").css('border-color', '#fff');
+                        $("#img_area").css('transform', 'rotate(90deg)');
+                        $("#switch_area").val('0');
+                    }
+                    if (swp != '0') {
+                        $("#adm_personal").slideUp('slow');
+                        $("#card_personal").css('border-color', '#fff');
+                        $("#img_personal").css('transform', 'rotate(90deg)');
+                        $("#switch_personal").val('0');
+                    }
 
                 }else{
                     $("#card_proceso").css('border-color', '#fff');
                     $("#img_proceso").css('transform', 'rotate(90deg)');
                     $("#switch_proceso").val('0');
+                    $("#adm_proceso").slideUp('slow');
                     
                 }
             })
@@ -736,32 +749,28 @@ $row = $resultado->fetch_assoc();
                 if (swp == 0) {
                     $("#card_personal").css('border-color', '#32C861');
                     $("#img_personal").css('transform', 'rotate(180deg)');
+                    $("#adm_personal").slideDown('slow');
                     $("#switch_personal").val('1');
                     //$("#card_personal").css('border-color', '#fff');
-
+                    if (swa != '0') {
+                        $("#adm_area").slideUp('slow');
+                        $("#card_area").css('border-color', '#fff');
+                        $("#img_area").css('transform', 'rotate(90deg)');
+                        $("#switch_area").val('0');
+                    }
+                    if (swpr != '0') {
+                        $("#adm_proceso").slideUp('slow');
+                        $("#card_proceso").css('border-color', '#fff');
+                        $("#img_proceso").css('transform', 'rotate(90deg)');
+                        $("#switch_proceso").val('0');
+                    }
                 }else{
                     $("#card_personal").css('border-color', '#fff');
                     $("#img_personal").css('transform', 'rotate(90deg)');
                     $("#switch_personal").val('0');
-                    
+                    $("#adm_personal").slideUp('slow');
                 }
             })
-            $(".A").hide();
-            $(".Q").click(function() {
-                var that = this;
-                $(".A:visible").slideUp("slow");
-                $(".Q span.expanded")
-                    .removeClass('expanded')
-                    .addClass('collapsed');
-                $(this)
-                    .next(".A:hidden")
-                    .slideDown("slow", function(){
-                        $('span.collapsed', that)
-                            .removeClass('collapsed')
-                            .addClass('expanded');
-                    });
-            });
-            */
         </script>
     </body>
 </html>

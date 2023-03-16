@@ -87,7 +87,7 @@ $row = $resultado->fetch_assoc();
                             </div>
                         </div><br>
                         <div class="row text-center" style="border-style: solid; border-width: 1px; border-color: #F48A1D;">
-                            <div class="col-11" style="margin: 0px auto; background-color: #F48A1D; padding-left: 10px; border-left: 6px solid #E91C2B; border-color: #E91C2B;">
+                            <div class="col-12" style="margin: 0px auto; background-color: #F48A1D; padding-left: 10px; border-left: 6px solid #E91C2B; border-color: #E91C2B;">
                                 <h5 style="color: #ffffff; padding: 0px; margin: opx; font-size: 15px; text-align: left;">Consulta de Procesos</h5> 
                             </div>
                             <br>

@@ -152,10 +152,11 @@
                     <div class="form-group row">
                         <label class="col-md-12 col-form-label">Adjuntar archivo</label>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row justify-content-center">
                         <div class="col-md-12">
-                            <input type="file" id="endFile" name="endFile" class="form-control">
+                            <input type="file" id="endFile" name="endFile" class="form-control" onchange="verFileSize('endFile')">
                         </div>
+                        <small><span style="color: red;">Tamaño max. del archivo 5mb.</span></small>
                     </div><hr>
                     <div class="form-group row">
                         <label class="col-md-12 col-form-label">Fecha Respuesta</label>

@@ -1115,6 +1115,36 @@ $row = $resultado->fetch_assoc();
                     }
                 })
             });
+            function verFileSize(file_nombre){
+                var archivo = $("#"+file_nombre).prop("files")[0].name;
+                var ext=["doc","docx","pdf","jpge","jpg","xls","xlsx"];
+                var tam= $("#"+file_nombre).prop("files")[0].size;
+                archnom = archivo.slice((archivo.lastIndexOf(".") - 1 >>> 0) + 2);
+                var buscar = ext.indexOf(archnom);
+                if (buscar == -1) {
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Archivo no permitido',
+                        text: 'El archivo debe ser: doc, pdf o jpg',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                    $("#"+file_nombre).val('');
+                    $("#"+file_nombre).html('');
+                } else {
+                    if (tam > 5242880) {
+                        Swal.fire({
+                            type: 'warning',
+                            title: 'El archivo es demasiado grande',
+                            text: 'Los archivos deben pesar menos de 5MB',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                        $("#"+file_nombre).val('');
+                        $("#"+file_nombre).html('');
+                    }
+                }
+            }
         </script>
     </body>
 </html>

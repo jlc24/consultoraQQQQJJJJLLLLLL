@@ -174,10 +174,11 @@
                     <div class="form-group row" id="field_f" style="display: none;">
                         <label class="col-md-4 col-form-label">Adjuntar archivos</label>
                     </div>
-                    <div class="form-group row" id="field_file" style="display: none;">
+                    <div class="form-group row justify-content-center" id="field_file" style="display: none;">
                         <div class="col-md-12">
-                            <input type="file" id="uploadFile" name="uploadFile" class="form-control">
+                            <input type="file" id="uploadFile" name="uploadFile" class="form-control" onchange="verFileSize('uploadFile')">
                         </div>
+                        <small><span style="color: red;">Tamaño max. del archivo 5mb.</span></small>
                     </div>
                     <div class="form-group row" style="display: none;" id="resp_area">
                         <label class="col-md-4 col-form-label">Encargado Acción</label>

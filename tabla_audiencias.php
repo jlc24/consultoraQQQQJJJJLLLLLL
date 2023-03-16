@@ -12,17 +12,10 @@
     <table class="table table-sm table-striped table-responsive-sm" style="text-align: left; font-size: 12px; border-style: solid; border-width: 2px; border-color: #32C861;">
         <tbody>
         <?php
-            if ($admid != '1' && $admid != '9') {
-                $sql = "SELECT `det_id`,`hoja_numero_tramite`, det_lugar_juzgado, det_juzgado, det_observacion, det_audiencia, hoja_area_proceso
-                        FROM hoja_detalle JOIN hoja 
-                        WHERE hoja_detalle.hoja_id = hoja.hoja_id AND det_audiencia >= NOW() AND det_estado = 'EJECUCION' AND det_audiencia != '0000-00-00 00:00:00';";
-                $resultado = mysqli_query($conexion, $sql);
-            }else{
-                $sql = "SELECT `det_id`,`hoja_numero_tramite`, det_lugar_juzgado, det_juzgado, det_observacion, det_audiencia
-                        FROM hoja_detalle JOIN hoja 
-                        WHERE hoja_detalle.hoja_id = hoja.hoja_id AND det_audiencia >= NOW() AND det_estado = 'EJECUCION' AND det_audiencia != '0000-00-00 00:00:00';";
-                $resultado = mysqli_query($conexion, $sql);
-            }
+            $sql = "SELECT `det_id`,`hoja_numero_tramite`, det_lugar_juzgado, det_juzgado, det_observacion, det_audiencia
+                    FROM hoja_detalle JOIN hoja 
+                    WHERE hoja_detalle.hoja_id = hoja.hoja_id AND det_audiencia >= NOW() AND det_estado = 'EJECUCION' AND det_audiencia != '0000-00-00 00:00:00' ORDER BY det_audiencia ASC;";
+            $resultado = mysqli_query($conexion, $sql);
             while ($registro = mysqli_fetch_assoc($resultado))
             {
         ?>
