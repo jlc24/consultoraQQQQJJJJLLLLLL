@@ -188,6 +188,24 @@ class ImprimirReporte
                     <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                 </tr>
                 <tr>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                </tr>
+                <tr>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                </tr>
+                <tr>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                </tr>
+                <tr>
                     <td style="color:#000000; width:100%; text-align:left; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><br><br><b>AUDIENCIAS</b></td>
                 </tr>
                 <tr>
@@ -221,7 +239,7 @@ class ImprimirReporte
                     <td style="color:#000000; width:20%; text-align:left; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"></td>
                 </tr>
                 <tr>
-                    <td style="color:#000000; width:100%; text-align:left; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><b><br>OBSERVACIONES:</b>________________________________________________________________________________________________________________________________________________<br></td>
+                    <td style="color:#000000; width:100%; text-align:left; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><b><br>OBSERVACIONES:</b>________________________________________________________________________________________________<br></td>
                 </tr>
             </tbody>
             </table>';
