@@ -518,6 +518,50 @@ $row = $resultado->fetch_assoc();
                             }
                     });
                 });
+                //Imprimir Hoja de Ruta despues de Registrar Hoja
+                $(document).on("click", ".btnImprimirBitacora", function() {
+                    cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                    //alert(cadena); return false;
+                    //https://jsonformatter.org/jsbeautifier
+                    $.ajax({
+                        type: "POST",
+                        url: "assets/inc/update_numero_hoja.php",
+                        data: cadena,
+                        success: function(r) {
+                                if(r != 1) {
+                                    //window.open('http://localhost/qjl/tcpdf/pdf/hoja_ruta.php', '_blank');
+                                    Swal.fire({
+                                        type: 'warning',
+                                        title: 'Error al generar el Reporte de la Hoja de Ruta',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    })
+                                }
+                            }
+                    });
+                });
+                //Imprimir Hoja de Ruta despues de Registrar Hoja
+                $(document).on("click", ".btnBitacoraBlanco", function() {
+                    cadena = "hoja_id=" + $(this).closest('tr').find('td:eq(0)').text();
+                    //alert(cadena); return false;
+                    //https://jsonformatter.org/jsbeautifier
+                    $.ajax({
+                        type: "POST",
+                        url: "assets/inc/update_numero_hoja.php",
+                        data: cadena,
+                        success: function(r) {
+                                if(r != 1) {
+                                    //window.open('http://localhost/qjl/tcpdf/pdf/hoja_ruta.php', '_blank');
+                                    Swal.fire({
+                                        type: 'warning',
+                                        title: 'Error al generar el Reporte de la Hoja de Ruta',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    })
+                                }
+                            }
+                    });
+                });
                 
                 //Borrar
                 $(document).on("click", ".btnBorrarAccion", function() {
