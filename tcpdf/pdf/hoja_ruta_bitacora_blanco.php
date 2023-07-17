@@ -141,69 +141,80 @@ class ImprimirReporte
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>FECHA</b></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>PRESENTAR</b></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>PRESENTAR</b></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>FECHA</b></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>RESPUESTA</b></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px;"><b>RESPUESTA</b></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000; font-size:13px; text-align:center"></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
                     <td style="color:#000000; width:10%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
-                    <td style="color:#000000; width:40%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:38%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"></td>
+                    <td style="color:#000000; width:4%; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><i class="far fa-stop"></i></td>
                 </tr>
                 <tr>
                     <td style="color:#000000; width:100%; text-align:left; border-left-color:#000000; border-right-color:#000000; border-bottom-color:#000000; border-top-color:#000000;"><br><br><b>AUDIENCIAS</b></td>
